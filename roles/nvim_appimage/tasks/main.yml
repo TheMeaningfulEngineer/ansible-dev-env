@@ -16,3 +16,22 @@
       copy:
         src: nvim
         dest: "{{ LOCAL_DOT_CONFIG_PATH }}"
+
+    - name: Create the dir for vim plugins
+      file:
+       path: "{{ HOME_USER_DIR }}/.local/share/nvim/site/pack/git-plugins/start"
+       state: directory
+       recurse: yes
+       mode: 0755
+
+    - name: Install flake 8 needed by ale
+      pip:
+        name: flake8
+
+    - name: Clone ale to "{{ HOME_USER_DIR }}/.local/share/nvim/site/pack/git-plugins/start/ale"
+      git:
+        repo: 'https://github.com/dense-analysis/ale.git'
+        dest: "{{ HOME_USER_DIR }}/.local/share/nvim/site/pack/git-plugins/start/ale"
+        version: "v2.6.0" 
+
+
