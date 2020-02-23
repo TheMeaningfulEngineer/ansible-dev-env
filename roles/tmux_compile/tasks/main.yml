@@ -1,0 +1,42 @@
+---
+- name: Install tmux build dependencies
+  become: yes
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    name: 
+      - libevent-dev
+      - ncurses-dev
+    state: present
+
+
+- name: Download and unarchive tmux sources
+  unarchive:
+    src: "https://github.com/tmux/tmux/releases/download/{{ TMUX_VERSION }}/{{ TMUX_UNCOMPRESSED_DIRNAME }}.tar.gz"
+    dest: "{{ COMPILE_PATH }}"
+    remote_src: yes
+
+- name: Running ./configure for tmux
+  command:
+    cmd: "./configure --prefix={{ LOCAL_BIN_PATH }}"
+    chdir: "{{ COMPILE_PATH }}/{{ TMUX_UNCOMPRESSED_DIRNAME }}"
+
+- name: Running make for tmux
+  command:
+    cmd: make
+    chdir: "{{ COMPILE_PATH }}/{{ TMUX_UNCOMPRESSED_DIRNAME }}"
+
+- name: Install tmux executable and man
+  command:
+    cmd: "make install prefix={{ COMPILE_PATH }}/install_"
+    chdir: "{{ COMPILE_PATH }}/{{ TMUX_UNCOMPRESSED_DIRNAME }}"
+
+- name: Copy the tmux executable to "{{ LOCAL_BIN_PATH }}"
+  copy:
+    src: "{{ COMPILE_PATH }}/{{ TMUX_UNCOMPRESSED_DIRNAME }}/tmux"
+    dest: "LOCAL_BIN_PATH"
+
+- name: Copy the tmux man entry to  executable to "{{ LOCAL_BIN_PATH }}"
+  copy:
+    src: "{{ COMPILE_PATH }}/{{ TMUX_UNCOMPRESSED_DIRNAME }}/tmux"
+    dest: "LOCAL_BIN_PATH"

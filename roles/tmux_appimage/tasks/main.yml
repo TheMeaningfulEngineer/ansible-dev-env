@@ -1,0 +1,18 @@
+---
+
+    - name: Download tmux appimage
+      get_url:
+        url: "https://github.com/tmux/tmux/releases/download/{{ VERSION }}/tmux-{{ VERSION }}-x86_64.AppImage"
+        dest: "{{ LOCAL_APPIMAGE_PATH }}/{{ APPIMAGE_FILENAME }}"
+        mode: 0755
+
+    - name: Create a symbolic link for tmux "{{ LOCAL_APPIMAGE_PATH }}/{{ APPIMAGE_FILENAME }}"
+      file:
+        src: "{{ LOCAL_APPIMAGE_PATH }}/{{ APPIMAGE_FILENAME }}"
+        dest: "{{ LOCAL_BIN_PATH }}/tmux"
+        state: link
+
+    - name: Copy the tmux config directory to "{{ LOCAL_DOT_CONFIG_PATH }}"
+      copy:
+        src: tmux.conf
+        dest: "{{ HOME_USER_DIR }}/.tmux.conf"

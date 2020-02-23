@@ -1,0 +1,5 @@
+---
+TMUX_VERSION: 3.0a
+TMUX_UNCOMPRESSED_DIRNAME: "tmux-{{ TMUX_VERSION }}"
+COMPILE_PATH: "{{ playbook_dir }}/tmux_compile_dir"
+

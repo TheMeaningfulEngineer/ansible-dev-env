@@ -1,0 +1,16 @@
+  - name: "Playing with Ansible and Git"
+    hosts: localhost
+    vars:
+      # Raw app images live in LOCAL_APPIMAGE_PATH
+      HOME_USER_DIR: "{{ ansible_env.HOME }}"
+      # Path to store the app images
+      LOCAL_APPIMAGE_PATH: "{{ HOME_USER_DIR }}/.local/appimages"
+      # A local path that is in system wide PATH
+      LOCAL_BIN_PATH: "{{ HOME_USER_DIR }}/.local/bin"
+      # Local path where the configuration files go
+      LOCAL_DOT_CONFIG_PATH: "{{ HOME_USER_DIR }}/.config"
+
+    roles:
+        - local_dirs_requirements
+        - nvim_appimage
+        - tmux_appimage
