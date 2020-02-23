@@ -2,6 +2,8 @@
     hosts: localhost
     vars:
       # Raw app images live in LOCAL_APPIMAGE_PATH
+      # Use the commented one for debug
+      # HOME_USER_DIR: "{{ playbook_dir }}/fake_home_user"
       HOME_USER_DIR: "{{ ansible_env.HOME }}"
       # Path to store the app images
       LOCAL_APPIMAGE_PATH: "{{ HOME_USER_DIR }}/.local/appimages"
