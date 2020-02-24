@@ -25,3 +25,4 @@
         block: |
           export PATH=$PATH:{{ LOCAL_BIN_PATH }}
           setxkbmap -option ctrl:nocaps
+          alias vi=nvim

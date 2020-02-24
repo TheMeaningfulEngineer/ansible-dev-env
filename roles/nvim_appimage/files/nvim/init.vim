@@ -31,3 +31,4 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_linters = {
 \   'python': ['flake8'],
 \}
+let b:ale_python_flake8_options = '--max-line-length=120'
