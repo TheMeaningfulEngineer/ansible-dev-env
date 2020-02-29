@@ -30,8 +30,7 @@
 
     - name: Clone ale to "{{ HOME_USER_DIR }}/.local/share/nvim/site/pack/git-plugins/start/ale"
       git:
+        force: "yes"
         repo: 'https://github.com/dense-analysis/ale.git'
         dest: "{{ HOME_USER_DIR }}/.local/share/nvim/site/pack/git-plugins/start/ale"
         version: "v2.6.0" 
-
-
