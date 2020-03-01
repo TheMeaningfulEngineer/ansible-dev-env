@@ -18,6 +18,11 @@
        state: directory
        mode: 0755
 
+       # TODO: I'm still not clear if I want to have 
+       # right alt serve as the ctrl key.
+       # ref:  setxkbmap -option ctrl:swap_lalt_lctl
+       # Also checking out what keyboard options are set is done with
+       # setxkbmap -query
     - name: Modify bashrc to have local bin files in the in path and capslock as ctrl
       blockinfile:
         path: "{{ HOME_USER_DIR }}/.bashrc"
