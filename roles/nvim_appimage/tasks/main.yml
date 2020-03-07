@@ -24,6 +24,16 @@
        recurse: yes
        mode: 0755
 
+    - name: Install pip
+      become: yes
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+        name:
+          - python3-pip
+        state: present
+
+
     - name: Install flake 8 needed by ale
       pip:
         name: flake8

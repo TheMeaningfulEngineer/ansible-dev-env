@@ -3,7 +3,7 @@
   become: yes
   blockinfile:
     path: "/usr/share/X11/xkb/symbols/ctrl"
-    mark: "// {mark} ANSIBLE MANAGED BLOCK"
+    marker: "// {mark} ANSIBLE MANAGED BLOCK"
     create: True
     block: |
         // Left Alt key functions as another left Ctrl.
@@ -14,9 +14,9 @@
         };
 
 
-- lineinfile:
-    #        path: /usr/share/X11/xkb/rules/evdev
-    path: /home/alan/personal-workspace/dev_env/evdev
+- become: yes
+  lineinfile:
+    path: /usr/share/X11/xkb/rules/evdev
     insertafter: 'ctrl:rctrl_ralt'
     line: '  ctrl:lalt_lctrl       =       +ctrl(lalt_lctrl)'
 
