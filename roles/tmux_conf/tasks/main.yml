@@ -1,0 +1,6 @@
+---
+
+- name: Copy the tmux config directory to "{{ LOCAL_DOT_CONFIG_PATH }}"
+  copy:
+    src: tmux.conf
+    dest: "{{ HOME_USER_DIR }}/.tmux.conf"

@@ -1,0 +1,43 @@
+---
+- name: Modify bashrc to have local bin files in the in path and capslock as ctrl
+  become: yes
+  blockinfile:
+    path: "/usr/share/X11/xkb/symbols/ctrl"
+    mark: "// {mark} ANSIBLE MANAGED BLOCK"
+    create: True
+    block: |
+        // Left Alt key functions as another left Ctrl.
+        partial modifier_keys
+        xkb_symbols "lalt_lctrl" {
+            replace key <LALT> { [ Control_L, Control_L ] };
+            modifier_map Control { <LALT> };
+        };
+
+
+- lineinfile:
+    #        path: /usr/share/X11/xkb/rules/evdev
+    path: /home/alan/personal-workspace/dev_env/evdev
+    insertafter: 'ctrl:rctrl_ralt'
+    line: '  ctrl:lalt_lctrl       =       +ctrl(lalt_lctrl)'
+
+
+# TODO: I'm still not clear if I want to have 
+# right alt serve as the ctrl key.
+# ref:  setxkbmap -option ctrl:swap_lalt_lctl
+# Also checking out what keyboard options are set is done with
+# setxkbmap -query
+# To get the list of available switches: man xkeyboard-config
+# To unset all the options
+# setxkbmap -option 
+# Reference for trying to get left alt act as lctrl without swapping
+#  https://unix.stackexchange.com/questions/353490/map-right-alt-to-left-control
+- name: Modify bashrc to have local bin files in the in path and capslock as ctrl
+  blockinfile:
+    path: "{{ HOME_USER_DIR }}/.bashrc"
+    create: True
+    block: |
+      export PATH=$PATH:{{ LOCAL_BIN_PATH }}
+      setxkbmap -option 
+      setxkbmap -option ctrl:nocaps
+      setxkbmap -option ctrl:ralt_rctrl
+      alias vi=nvim

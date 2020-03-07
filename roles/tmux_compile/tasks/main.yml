@@ -9,6 +9,10 @@
       - ncurses-dev
     state: present
 
+- name: Create "{{ COMPILE_PATH }}"
+  file:
+    path: "{{ COMPILE_PATH }}"
+    state: directory
 
 - name: Download and unarchive tmux sources
   unarchive:
@@ -34,9 +38,11 @@
 - name: Copy the tmux executable to "{{ LOCAL_BIN_PATH }}"
   copy:
     src: "{{ COMPILE_PATH }}/{{ TMUX_UNCOMPRESSED_DIRNAME }}/tmux"
-    dest: "LOCAL_BIN_PATH"
+    dest: "{{ LOCAL_BIN_PATH }}"
 
 - name: Copy the tmux man entry to  executable to "{{ LOCAL_BIN_PATH }}"
   copy:
     src: "{{ COMPILE_PATH }}/{{ TMUX_UNCOMPRESSED_DIRNAME }}/tmux"
-    dest: "LOCAL_BIN_PATH"
+    dest: "{{ LOCAL_BIN_PATH }}"
+    mode: "0755"
+

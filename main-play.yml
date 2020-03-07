@@ -14,5 +14,7 @@
 
     roles:
         - local_dirs_requirements
+        - set_keymaps
         - nvim_appimage
-        - tmux_appimage
+        - tmux_compile
+        - tmux_conf
