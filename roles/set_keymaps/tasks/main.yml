@@ -37,7 +37,7 @@
     create: True
     block: |
       export PATH=$PATH:{{ LOCAL_BIN_PATH }}
-      setxkbmap -option 
       setxkbmap -option ctrl:nocaps
+      setxkbmap -option ctrl:lalt_lctrl
       setxkbmap -option ctrl:ralt_rctrl
       alias vi=nvim
