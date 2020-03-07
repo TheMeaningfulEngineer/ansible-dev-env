@@ -23,11 +23,17 @@
        # ref:  setxkbmap -option ctrl:swap_lalt_lctl
        # Also checking out what keyboard options are set is done with
        # setxkbmap -query
+       # To get the list of available switches: man xkeyboard-config
+       # To unset all the options
+       # setxkbmap -option 
+       # Reference for trying to get left alt act as lctrl without swapping
+       #  https://unix.stackexchange.com/questions/353490/map-right-alt-to-left-control
     - name: Modify bashrc to have local bin files in the in path and capslock as ctrl
       blockinfile:
         path: "{{ HOME_USER_DIR }}/.bashrc"
         create: True
         block: |
           export PATH=$PATH:{{ LOCAL_BIN_PATH }}
+          setxkbmap -option 
           setxkbmap -option ctrl:nocaps
           alias vi=nvim
