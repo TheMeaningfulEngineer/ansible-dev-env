@@ -26,3 +26,9 @@ autocmd FileType gitcommit setlocal spell
 " make Y effect to end of line instead of whole line
 map Y y$
 
+" Ale related config
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_linters = {
+\   'python': ['flake8'],
+\}
+let b:ale_python_flake8_options = '--max-line-length=120'

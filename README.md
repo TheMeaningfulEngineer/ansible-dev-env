@@ -26,3 +26,8 @@ Running `tree -a fake_home_user` will give you a good impression on what happene
 
 
 
+# TODO
+
+* the variables can be set smarter (currently hardcoding on multiple places)
+* make dependencies between roles 
+* split roles into sudo and non sudo roles
