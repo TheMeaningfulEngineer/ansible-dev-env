@@ -1,0 +1,32 @@
+---
+##    - name: Install pip
+#      become: yes
+#      apt:
+#        update_cache: yes
+#        cache_valid_time: 3600
+#        name:
+#          - python3-pip
+#        state: present
+
+    - name: Install flake 8 needed by ale
+      pip:
+        name: flake8
+
+    - name: Clone ale to "{{ HOME_USER_DIR }}/.local/share/nvim/site/pack/git-plugins/start/ale"
+      git:
+        force: "yes"
+        repo: 'https://github.com/dense-analysis/ale.git'
+        dest: "{{ HOME_USER_DIR }}/.local/share/nvim/site/pack/git-plugins/start/ale"
+        version: "v2.6.0" 
+
+    - name: Add config related to ale
+      blockinfile:
+        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
+        marker: '"{mark} ANSIBLE MANAGED BLOCK'
+        create: True
+        block: |
+          let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+          let g:ale_linters = {
+          \   'python': ['flake8'],
+          \}
+          let b:ale_python_flake8_options = '--max-line-length=120'

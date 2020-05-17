@@ -1,5 +1,17 @@
 ---
 
+    - name: Create a directory if it does not exist
+      file:
+        path: "{{ LOCAL_APPIMAGE_PATH }}"
+        state: directory
+        mode: '0755'
+
+    - name: Create a directory if it does not exist
+      file:
+        path: "{{ LOCAL_BIN_PATH }}"
+        state: directory
+        mode: '0755'
+
     - name: Download Neovim
       get_url:
         url: "https://github.com/neovim/neovim/releases/download/{{ VERSION }}/nvim.appimage"
@@ -16,31 +28,3 @@
       copy:
         src: nvim
         dest: "{{ LOCAL_DOT_CONFIG_PATH }}"
-
-    - name: Create the dir for vim plugins
-      file:
-       path: "{{ HOME_USER_DIR }}/.local/share/nvim/site/pack/git-plugins/start"
-       state: directory
-       recurse: yes
-       mode: 0755
-
-    - name: Install pip
-      become: yes
-      apt:
-        update_cache: yes
-        cache_valid_time: 3600
-        name:
-          - python3-pip
-        state: present
-
-
-    - name: Install flake 8 needed by ale
-      pip:
-        name: flake8
-
-    - name: Clone ale to "{{ HOME_USER_DIR }}/.local/share/nvim/site/pack/git-plugins/start/ale"
-      git:
-        force: "yes"
-        repo: 'https://github.com/dense-analysis/ale.git'
-        dest: "{{ HOME_USER_DIR }}/.local/share/nvim/site/pack/git-plugins/start/ale"
-        version: "v2.6.0" 
