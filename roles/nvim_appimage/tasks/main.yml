@@ -40,3 +40,12 @@
         url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
         dest: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/autoload/plug.vim"
         mode: 0755
+
+    - name: Modify bashrc to add aliases for vim and vi
+      blockinfile:
+        path: "{{ HOME_USER_DIR }}/.bashrc"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK [nvim]"
+        create: True
+        block: |
+            alias vim=nvim
+            alias vi=nvim
