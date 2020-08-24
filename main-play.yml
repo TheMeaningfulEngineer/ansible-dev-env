@@ -11,11 +11,13 @@
       LOCAL_BIN_PATH: "{{ HOME_USER_DIR }}/.local/bin"
       # Local path where the configuration files go
       LOCAL_DOT_CONFIG_PATH: "{{ HOME_USER_DIR }}/.config"
+      NVIM_VERSION: "0.4.4"
+      TMUX_VERSION: "3.1b"
 
     roles:
-#        - local_dirs_requirements
+        - local_dirs_requirements
 #        - set_keymaps
         - nvim_appimage
-        - nvim_plugin_ale
-#        - tmux_compile
-#        - tmux_conf
+#        - nvim_plugin_ale
+        - tmux_appimage
+        - tmux_conf

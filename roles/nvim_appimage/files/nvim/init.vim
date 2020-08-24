@@ -26,3 +26,5 @@ autocmd FileType gitcommit setlocal spell
 " make Y effect to end of line instead of whole line
 map Y y$
 
+call plug#begin('~/.config/nvim/plugins')
+call plug#end()

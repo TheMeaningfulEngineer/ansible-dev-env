@@ -1,4 +1,3 @@
 ---
 LOCAL_DOT_CONFIG_PATH: "{{ HOME_USER_DIR }}/.config"
-VERSION: v0.4.3
-APPIMAGE_FILENAME: "nvim.appimage"
+APPIMAGE_FILENAME: "nvim.{{ NVIM_VERSION }}.appimage"
