@@ -49,3 +49,6 @@
         block: |
             alias vim=nvim
             alias vi=nvim
+
+    - name: Install nvim plug plugins
+      shell: nvim +PlugInstall +qall

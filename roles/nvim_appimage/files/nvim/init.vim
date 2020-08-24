@@ -27,4 +27,5 @@ autocmd FileType gitcommit setlocal spell
 map Y y$
 
 call plug#begin('~/.config/nvim/plugins')
+Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
