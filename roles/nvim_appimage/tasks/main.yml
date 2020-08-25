@@ -50,5 +50,9 @@
             alias vim=nvim
             alias vi=nvim
 
+    - name: Install tye python language server
+      pip:
+          name: python-language-server
+
     - name: Install nvim plug plugins
       shell: nvim +PlugInstall +qall

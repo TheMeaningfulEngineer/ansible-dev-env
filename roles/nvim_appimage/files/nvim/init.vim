@@ -28,4 +28,29 @@ map Y y$
 
 call plug#begin('~/.config/nvim/plugins')
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'neovim/nvim-lsp'
 call plug#end()
+
+" For the language server to work you must of have done pip install python-language-server
+
+" Ignore the pycodestyle for the leanguage server
+lua <<EOF
+require'nvim_lsp'.pyls.setup{
+  settings = {
+    pyls = {
+      plugins = {
+        pycodestyle = {
+          enabled = false; 
+          }
+        }
+      }
+    }
+  }
+EOF
+
+autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
