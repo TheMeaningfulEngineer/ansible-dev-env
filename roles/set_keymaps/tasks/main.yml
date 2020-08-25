@@ -34,10 +34,9 @@
 - name: Modify bashrc to have local bin files in the in path and capslock as ctrl
   blockinfile:
     path: "{{ HOME_USER_DIR }}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK [key_bindings]"
     create: True
     block: |
-      export PATH=$PATH:{{ LOCAL_BIN_PATH }}
       setxkbmap -option ctrl:nocaps
       setxkbmap -option ctrl:lalt_lctrl
       setxkbmap -option ctrl:ralt_rctrl
-      alias vi=nvim

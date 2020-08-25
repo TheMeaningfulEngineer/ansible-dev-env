@@ -17,3 +17,11 @@
        path: "{{ LOCAL_DOT_CONFIG_PATH }}"
        state: directory
        mode: 0755
+
+    - name: Modify bashrc to have local bin files in the in path and capslock as ctrl
+      blockinfile:
+        path: "{{ HOME_USER_DIR }}/.bashrc"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK [local_dirs]"
+        create: True
+        block: |
+          export PATH=$PATH:{{ LOCAL_BIN_PATH }}
