@@ -14,7 +14,7 @@
 
     - name: Download Neovim
       get_url:
-        url: "https://github.com/neovim/neovim/releases/download/v{{ NVIM_VERSION }}/nvim.appimage"
+        url: "https://github.com/neovim/neovim/releases/download/{{ NVIM_VERSION }}/nvim.appimage"
         dest: "{{ LOCAL_APPIMAGE_PATH }}/{{ APPIMAGE_FILENAME }}"
         mode: 0755
 
