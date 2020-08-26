@@ -25,32 +25,3 @@ autocmd FileType gitcommit setlocal spell
 
 " make Y effect to end of line instead of whole line
 map Y y$
-
-call plug#begin('~/.config/nvim/plugins')
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'neovim/nvim-lsp'
-call plug#end()
-
-" For the language server to work you must of have done pip install python-language-server
-
-" Ignore the pycodestyle for the leanguage server
-lua <<EOF
-require'nvim_lsp'.pyls.setup{
-  settings = {
-    pyls = {
-      plugins = {
-        pycodestyle = {
-          enabled = false; 
-          }
-        }
-      }
-    }
-  }
-EOF
-
-autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
-
-nnoremap <silent> <leader>a  <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> <leader>s  <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> <leader>d  <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> <leader>f  <cmd>lua vim.lsp.buf.document_symbol()<CR>

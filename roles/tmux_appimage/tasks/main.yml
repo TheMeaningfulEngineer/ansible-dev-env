@@ -18,5 +18,3 @@
         create: True
         block: |
             TERM=xterm
-
-

@@ -1,0 +1,23 @@
+---
+
+    - name: Create a directory for vim plug [ "{{ LOCAL_DOT_CONFIG_PATH }}/autoload" ]
+      file:
+        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/autoload"
+        state: directory
+        mode: '0755'
+
+    - name: Download Vim Plug ["{{ LOCAL_DOT_CONFIG_PATH }}/autoload/plug.vim"]
+      get_url:
+        url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+        dest: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/autoload/plug.vim"
+        mode: 0755
+
+    - name: Add vim plug in config
+      blockinfile:
+        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
+        marker: "\" {mark} ANSIBLE MANAGED BLOCK [nvim-plug]"
+        create: True
+        block: |
+            call plug#begin('~/.config/nvim/plugins')
+            call plug#end()
+
