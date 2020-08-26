@@ -50,7 +50,7 @@ EOF
 
 autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
 
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> <leader>a  <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <leader>s  <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <leader>d  <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> <leader>f  <cmd>lua vim.lsp.buf.document_symbol()<CR>
