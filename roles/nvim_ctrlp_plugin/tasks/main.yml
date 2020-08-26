@@ -1,0 +1,9 @@
+---
+    - name: Add ctrlp so plug can install it
+      lineinfile:
+        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
+        insertbefore: "call plug#end()"
+        line: "Plug 'ctrlpvim/ctrlp.vim'"
+          
+    - name: Install nvim plug plugins
+      shell: nvim --headless +PlugInstall +qa

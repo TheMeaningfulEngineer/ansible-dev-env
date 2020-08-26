@@ -18,5 +18,8 @@
         - local_dirs_requirements
         - set_keymaps
         - nvim_appimage
+        - nvim_plug
+        - nvim_lsp_plugin
+        - nvim_ctrlp_plugin
         - tmux_appimage
         - tmux_conf

@@ -1,0 +1,37 @@
+---
+    - name: Install the python language server
+      pip:
+          name: python-language-server
+
+    - name: Add nvim-lsp so plug can install it
+      lineinfile:
+        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
+        insertbefore: "call plug#end()"
+        line: "Plug 'neovim/nvim-lsp'"
+          
+    - name: Install nvim plug plugins
+      shell: nvim --headless +PlugInstall +qa
+
+    - name: Modify bashrc to add aliases for vim and vi
+      blockinfile:
+        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
+        marker: "\" {mark} ANSIBLE MANAGED BLOCK [nvim-lsp]"
+        block: |
+            lua <<EOF
+            require'nvim_lsp'.pyls.setup{
+              settings = {
+                pyls = {
+                  plugins = {
+                    pycodestyle = {
+                      enabled = false; 
+                      }
+                    }
+                  }
+                }
+              }
+            EOF
+            autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
+            nnoremap <silent> <leader>a  <cmd>lua vim.lsp.buf.definition()<CR>
+            nnoremap <silent> <leader>s  <cmd>lua vim.lsp.buf.hover()<CR>
+            nnoremap <silent> <leader>d  <cmd>lua vim.lsp.buf.references()<CR>
+            nnoremap <silent> <leader>f  <cmd>lua vim.lsp.buf.document_symbol()<CR>

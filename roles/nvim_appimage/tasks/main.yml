@@ -23,23 +23,11 @@
         src: "{{ LOCAL_APPIMAGE_PATH }}/{{ APPIMAGE_FILENAME }}"
         dest: "{{ LOCAL_BIN_PATH }}/nvim"
         state: link
-
+    
     - name: Copy the nvim config directory to "{{ LOCAL_DOT_CONFIG_PATH }}"
       copy:
         src: nvim
         dest: "{{ LOCAL_DOT_CONFIG_PATH }}"
-
-    - name: Create a directory [ "{{ LOCAL_DOT_CONFIG_PATH }}/autoload" ]
-      file:
-        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/autoload"
-        state: directory
-        mode: '0755'
-
-    - name: Download Vim Plug ["{{ LOCAL_DOT_CONFIG_PATH }}/autoload/plug.vim"]
-      get_url:
-        url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-        dest: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/autoload/plug.vim"
-        mode: 0755
 
     - name: Modify bashrc to add aliases for vim and vi
       blockinfile:
@@ -50,9 +38,3 @@
             alias vim=nvim
             alias vi=nvim
 
-    - name: Install tye python language server
-      pip:
-          name: python-language-server
-
-    - name: Install nvim plug plugins
-      shell: nvim +PlugInstall +qall
