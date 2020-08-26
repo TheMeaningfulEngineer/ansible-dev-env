@@ -8,6 +8,12 @@
         path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
         insertbefore: "call plug#end()"
         line: "Plug 'neovim/nvim-lsp'"
+
+    - name: Add nvim-lsp so plug can install it
+      lineinfile:
+        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
+        insertbefore: "call plug#end()"
+        line: "Plug 'nvim-lua/diagnostic-nvim'"
           
     - name: Install nvim plug plugins
       shell: nvim --headless +PlugInstall +qa
@@ -19,6 +25,7 @@
         block: |
             lua <<EOF
             require'nvim_lsp'.pyls.setup{
+              on_attach=require'diagnostic'.on_attach;
               settings = {
                 pyls = {
                   plugins = {
@@ -35,3 +42,5 @@
             nnoremap <silent> <leader>s  <cmd>lua vim.lsp.buf.hover()<CR>
             nnoremap <silent> <leader>d  <cmd>lua vim.lsp.buf.references()<CR>
             nnoremap <silent> <leader>f  <cmd>lua vim.lsp.buf.document_symbol()<CR>
+            set updatetime=500
+            autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
