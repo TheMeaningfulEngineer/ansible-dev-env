@@ -1,0 +1,33 @@
+---
+    - name: Add fzf.vim so plug can install it
+      lineinfile:
+        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
+        insertbefore: "call plug#end()"
+        line: "Plug 'junegunn/fzf.vim'"
+          
+    - name: Add fzf so plug can install it
+      lineinfile:
+        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
+        insertbefore: "call plug#end()"
+        line: "Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }"
+
+    - name: Install nvim plug plugins
+      shell: nvim --headless +PlugInstall +qa
+
+    - name: Modify init.vim to add aliases for vim and vi
+      blockinfile:
+        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
+        marker: "\" {mark} ANSIBLE MANAGED BLOCK [fzf]"
+        create: True
+        block: |
+            nnoremap <silent> <Leader>b :Buffers<CR>
+            nnoremap <silent> <Leader>f :Files<CR>
+            nnoremap <silent> <Leader>g :Rg<CR>
+
+    - name: Modify bashrc to use fzf rg
+      blockinfile:
+        path: "{{ HOME_USER_DIR }}/.bashrc"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK [fzf]"
+        create: True
+        block: |
+            export FZF_DEFAULT_COMMAND='rg --files'
