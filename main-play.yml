@@ -20,6 +20,6 @@
         - nvim_appimage
         - nvim_plug
         - nvim_lsp_plugin
-        - nvim_ctrlp_plugin
+        - nvim_fzf_plugin
         - tmux_appimage
         - tmux_conf
