@@ -23,7 +23,7 @@
             nnoremap <silent> <Leader>v :Buffers<CR>
             nnoremap <silent> <Leader>f :Files<CR>
             nnoremap <silent> <Leader>r :Rg<CR>
-            \" Don't list files when ripgrepping
+            " Don't list files when ripgrepping
             command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
 
     - name: Modify bashrc to use fzf rg

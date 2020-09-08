@@ -7,7 +7,7 @@
       lineinfile:
         path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
         insertbefore: "call plug#end()"
-        line: "Plug 'neovim/nvim-lsp'"
+        line: "Plug 'neovim/nvim-lspconfig'"
 
     - name: Add nvim-lsp so plug can install it
       lineinfile:
