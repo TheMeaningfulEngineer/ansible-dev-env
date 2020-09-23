@@ -1,4 +1,13 @@
 ---
+    - name: Install ripgrep
+      become: yes
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+        name: 
+          - ripgrep
+        state: present
+
     - name: Add fzf.vim so plug can install it
       lineinfile:
         path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"

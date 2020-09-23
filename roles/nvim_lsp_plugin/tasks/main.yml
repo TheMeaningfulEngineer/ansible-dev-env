@@ -1,4 +1,14 @@
 ---
+
+    - name: Install pip
+      become: yes
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+        name: 
+          - python3-pip
+        state: present
+
     - name: Install the python language server
       pip:
           name: python-language-server
