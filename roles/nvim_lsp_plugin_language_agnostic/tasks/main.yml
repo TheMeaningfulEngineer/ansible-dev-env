@@ -1,28 +1,12 @@
 ---
 
-    - name: Install pip
-      become: yes
-      apt:
-        update_cache: yes
-        cache_valid_time: 3600
-        name: 
-          - python3-pip
-        state: present
-
-    - name: Install the python language server
-      pip:
-        name:
-          - python-language-server
-          - pyflakes
-          - pycodestyle
-
-    - name: Add nvim-lsp so plug can install it
+    - name: Add nvim-lspconfig so plug can install it
       lineinfile:
         path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
         insertbefore: "call plug#end()"
         line: "Plug 'neovim/nvim-lspconfig'"
 
-    - name: Add nvim-lsp so plug can install it
+    - name: Add diagnostic-nvim so plug can install it
       lineinfile:
         path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
         insertbefore: "call plug#end()"
@@ -34,24 +18,8 @@
     - name: Modify bashrc to add aliases for vim and vi
       blockinfile:
         path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
-        marker: "\" {mark} ANSIBLE MANAGED BLOCK [nvim-lsp]"
+        marker: "\" {mark} ANSIBLE MANAGED BLOCK [nvim-lsp-agnostic]"
         block: |
-            lua <<EOF
-            require'nvim_lsp'.pyls.setup{
-              on_attach=require'diagnostic'.on_attach;
-              settings = {
-                pyls = {
-                  plugins = {
-                    pycodestyle = {
-                      enabled = true; 
-                      maxLineLength = 130;
-                      }
-                    }
-                  }
-                }
-              }
-            EOF
-            autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
             nnoremap <silent> <leader>a  <cmd>lua vim.lsp.buf.definition()<CR>
             nnoremap <silent> <leader>s  <cmd>lua vim.lsp.buf.hover()<CR>
             nnoremap <silent> <leader>d  <cmd>lua vim.lsp.buf.references()<CR>

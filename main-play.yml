@@ -19,7 +19,9 @@
         - set_keymaps
         - nvim_appimage
         - nvim_plug
-        - nvim_lsp_plugin
+        - nvim_plugins
+        - nvim_lsp_plugin_language_agnostic
+        - nvim_lsp_plugin_python
         - nvim_fzf_plugin
         - tmux_appimage
         - tmux_conf

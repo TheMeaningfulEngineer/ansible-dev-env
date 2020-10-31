@@ -16,25 +16,13 @@
           - pyflakes
           - pycodestyle
 
-    - name: Add nvim-lsp so plug can install it
-      lineinfile:
-        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
-        insertbefore: "call plug#end()"
-        line: "Plug 'neovim/nvim-lspconfig'"
-
-    - name: Add nvim-lsp so plug can install it
-      lineinfile:
-        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
-        insertbefore: "call plug#end()"
-        line: "Plug 'nvim-lua/diagnostic-nvim'"
-          
     - name: Install nvim plug plugins
       shell: nvim --headless +PlugInstall +qa
 
     - name: Modify bashrc to add aliases for vim and vi
       blockinfile:
         path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
-        marker: "\" {mark} ANSIBLE MANAGED BLOCK [nvim-lsp]"
+        marker: "\" {mark} ANSIBLE MANAGED BLOCK [nvim-lsp-python]"
         block: |
             lua <<EOF
             require'nvim_lsp'.pyls.setup{
@@ -52,9 +40,3 @@
               }
             EOF
             autocmd Filetype python setlocal omnifunc=v:lua.vim.lsp.omnifunc
-            nnoremap <silent> <leader>a  <cmd>lua vim.lsp.buf.definition()<CR>
-            nnoremap <silent> <leader>s  <cmd>lua vim.lsp.buf.hover()<CR>
-            nnoremap <silent> <leader>d  <cmd>lua vim.lsp.buf.references()<CR>
-            nnoremap <silent> <leader>f  <cmd>lua vim.lsp.buf.document_symbol()<CR>
-            set updatetime=200
-            autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()

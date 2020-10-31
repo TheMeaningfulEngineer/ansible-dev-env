@@ -6,7 +6,11 @@ set hidden
 
 colorscheme ron
 set number
+
+autocmd TermOpen * setlocal nonumber norelativenumber
 set mouse=a
+nnoremap <C-p> :bp<CR>
+nnoremap <C-n> :bn<CR>
 
 " TODO: I seem to have lost the spellcheck in vim
 
@@ -19,7 +23,6 @@ set clipboard=unnamedplus
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 
-autocmd TermOpen * setlocal nonumber norelativenumber
 
 " Spell-check for certain files
 autocmd FileType markdown setlocal spell
@@ -28,6 +31,4 @@ autocmd FileType gitcommit setlocal spell
 " make Y effect to end of line instead of whole line
 map Y y$
 
-nnoremap <C-p> :bp<CR>
-nnoremap <C-n> :bn<CR>
 
