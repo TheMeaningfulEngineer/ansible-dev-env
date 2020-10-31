@@ -1,0 +1,16 @@
+---
+
+    - name: Add vim-zoom
+      lineinfile:
+        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
+        insertbefore: "call plug#end()"
+        line: "Plug 'dhruvasagar/vim-zoom'"
+
+    - name: Add bufkill
+      lineinfile:
+        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
+        insertbefore: "call plug#end()"
+        line: "Plug 'qpkorr/vim-bufkill'"
+
+    - name: Install nvim plug plugins
+      shell: nvim --headless +PlugInstall +qa
