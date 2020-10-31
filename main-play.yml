@@ -22,6 +22,7 @@
         - nvim_plugins
         - nvim_lsp_plugin_language_agnostic
         - nvim_lsp_plugin_python
+        - nvim_lsp_plugin_c_cpp
         - nvim_fzf_plugin
         - tmux_appimage
         - tmux_conf
