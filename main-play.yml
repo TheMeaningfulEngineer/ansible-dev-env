@@ -13,6 +13,8 @@
       LOCAL_DOT_CONFIG_PATH: "{{ HOME_USER_DIR }}/.config"
       NVIM_VERSION: "nightly"
       TMUX_VERSION: "3.1b"
+      FZF_VERSION: "0.24.2"
+
 
     roles:
         - local_dirs_requirements
@@ -23,6 +25,7 @@
         - nvim_lsp_plugin_language_agnostic
         - nvim_lsp_plugin_python
         - nvim_lsp_plugin_c_cpp
+        - fzf_install
         - nvim_fzf_plugin
         - tmux_appimage
         - tmux_conf

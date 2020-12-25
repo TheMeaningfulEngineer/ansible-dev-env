@@ -1,0 +1,26 @@
+---
+    - name: Git checkout
+      git:
+        repo: https://github.com/junegunn/fzf.git
+        dest: "{{ HOME_USER_DIR }}/.fzf"
+        version: "{{ FZF_VERSION }}"
+
+    - name: Install  fzf
+      shell: "yes | {{ HOME_USER_DIR }}/.fzf/install"
+
+    - name: Install ripgrep
+      become: yes
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+        name: 
+          - ripgrep
+        state: present
+
+    - name: Modify bashrc to use fzf rg
+      blockinfile:
+        path: "{{ HOME_USER_DIR }}/.bashrc"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK [fzf]"
+        create: True
+        block: |
+            export FZF_DEFAULT_COMMAND='rg --files'
