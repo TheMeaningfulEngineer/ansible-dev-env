@@ -26,6 +26,7 @@
         - nvim_lsp_plugin_python
         - nvim_lsp_plugin_c_cpp
         - fzf_install
+        - nvr_install
         - nvim_fzf_plugin
         - tmux_appimage
         - tmux_conf
