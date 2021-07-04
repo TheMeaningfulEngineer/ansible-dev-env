@@ -25,4 +25,5 @@
             nnoremap <silent> <leader>d  <cmd>lua vim.lsp.buf.references()<CR>
             nnoremap <silent> <leader>f  <cmd>lua vim.lsp.buf.document_symbol()<CR>
             set updatetime=200
-            autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
+            " This used to work but has stopped working once I installed 0.5
+            " autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
