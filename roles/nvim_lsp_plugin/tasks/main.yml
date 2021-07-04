@@ -37,7 +37,7 @@
         marker: "\" {mark} ANSIBLE MANAGED BLOCK [nvim-lsp]"
         block: |
             lua <<EOF
-            require'nvim_lsp'.pyls.setup{
+            require'lspconfig'.pyls.setup{
               on_attach=require'diagnostic'.on_attach;
               settings = {
                 pyls = {

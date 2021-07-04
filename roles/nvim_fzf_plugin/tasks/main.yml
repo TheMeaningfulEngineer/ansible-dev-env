@@ -3,6 +3,12 @@
       lineinfile:
         path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
         insertbefore: "call plug#end()"
+        line: "Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }"
+
+    - name: Add fzf.vim so plug can install it
+      lineinfile:
+        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
+        insertbefore: "call plug#end()"
         line: "Plug 'junegunn/fzf.vim'"
           
     - name: Install nvim plug plugins
