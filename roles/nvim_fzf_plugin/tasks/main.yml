@@ -10,7 +10,7 @@
         path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
         insertbefore: "call plug#end()"
         line: "Plug 'junegunn/fzf.vim'"
-          
+
     - name: Install nvim plug plugins
       shell: nvim --headless +PlugInstall +qa
 
@@ -20,9 +20,7 @@
         marker: "\" {mark} ANSIBLE MANAGED BLOCK [fzf]"
         create: True
         block: |
-            nnoremap <silent> <Leader>v :Buffers<CR>
             nnoremap <silent> <Leader>f :Files<CR>
             nnoremap <silent> <Leader>r :Rg<CR>
-            " Don't list files when ripgrepping
-            command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
-
+            nnoremap <C-p> :Buffers<CR>
+            nnoremap <C-n> :Buffers<CR>
