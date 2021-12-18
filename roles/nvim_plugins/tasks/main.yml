@@ -12,7 +12,7 @@
         insertbefore: "call plug#end()"
         line: "Plug 'qpkorr/vim-bufkill'"
 
-    - name: Add bufkill
+    - name: Add vim-sendtowindow
       lineinfile:
         path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
         insertbefore: "call plug#end()"
