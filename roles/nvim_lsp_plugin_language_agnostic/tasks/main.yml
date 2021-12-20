@@ -6,12 +6,6 @@
         insertbefore: "call plug#end()"
         line: "Plug 'neovim/nvim-lspconfig'"
 
-    - name: Add diagnostic-nvim so plug can install it
-      lineinfile:
-        path: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim/init.vim"
-        insertbefore: "call plug#end()"
-        line: "Plug 'nvim-lua/diagnostic-nvim'"
-          
     - name: Install nvim plug plugins
       shell: nvim --headless +PlugInstall +qa
 
@@ -25,5 +19,3 @@
             nnoremap <silent> <leader>d  <cmd>lua vim.lsp.buf.references()<CR>
             nnoremap <silent> <leader>f  <cmd>lua vim.lsp.buf.document_symbol()<CR>
             set updatetime=200
-            " This used to work but has stopped working once I installed 0.5
-            " autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
