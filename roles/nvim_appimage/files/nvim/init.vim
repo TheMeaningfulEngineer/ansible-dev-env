@@ -1,7 +1,7 @@
 set nohlsearch
 set number
 set tabstop=4 shiftwidth=4 expandtab
-set wildmode=longest,list,full
+set wildmode=longest,list 
 set hidden
 
 colorscheme ron
