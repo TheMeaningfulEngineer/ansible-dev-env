@@ -1,0 +1,29 @@
+---
+    - name: Add Plenary
+      lineinfile:
+        path: "{{ NVIM_CONFIG_VIMSCRIPT }}"
+        insertbefore: "call plug#end()"
+        line: "Plug 'nvim-lua/plenary.nvim'"
+
+    - name: Add Telescope
+      lineinfile:
+        path: "{{ NVIM_CONFIG_VIMSCRIPT }}"
+        insertbefore: "call plug#end()"
+        line: "Plug 'nvim-telescope/telescope.nvim'"
+
+
+    - name: Install nvim plug plugins
+      shell: nvim --headless +PlugInstall +qa
+
+    - name: Telescope config
+      blockinfile:
+        path: "{{ NVIM_CONFIG_LUA }}"
+        marker: "-- {mark} ANSIBLE MANAGED BLOCK [Telescope]"
+        create: True
+        block: |
+          -- TODO: figure out how to add the buffere delete functionality: https://github.com/nvim-telescope/telescope.nvim/pull/828
+          -- lua etelescope = require('telescope.builtin').find_files()
+          vim.keymap.set('n', '<Leader>f', ':Telescope find_files theme=ivy <CR>', {silent = true})
+          vim.keymap.set('n', '<Leader>r', ':Telescope live_grep theme=ivy <CR>', {silent = true})
+          vim.keymap.set('n', '<C-p>', ':Telescope buffers theme=ivy <CR>')
+          vim.keymap.set('n', '<C-n>', ':Telescope buffers theme=ivy <CR>')
