@@ -5,6 +5,9 @@ require "user.cmp"
 -- Colorscheme [it's a command not a config :/]
 vim.cmd('colorscheme desert')
 
+-- Clever f only loop thorugh single line
+vim.cmd('let g:clever_f_across_no_line = 1')
+
 -- Tab and auto ident conf
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4

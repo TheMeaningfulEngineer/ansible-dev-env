@@ -45,6 +45,9 @@ return packer.startup(function(use)
   -- My plugins here
   use "wbthomason/packer.nvim" -- Have packer manage itself
   use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
+  use "rhysd/clever-f.vim" -- Useful lua functions used ny lots of plugins
+
+
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"
