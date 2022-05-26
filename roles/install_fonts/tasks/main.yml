@@ -1,0 +1,12 @@
+---
+
+    - name: Create "{{ LOCAL_FONTS_PATH }}" if not there
+      file:
+       path: "{{ LOCAL_FONTS_PATH }}"
+       state: directory
+       mode: 0755
+
+    - name: Download hack font
+      get_url:
+        url: https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/Hack/Regular/complete/Hack%20Regular%20Nerd%20Font%20Complete.ttf
+        dest: "{{ LOCAL_FONTS_PATH }}/Hack-Regular-Nerd-Font-Complete.ttf"
