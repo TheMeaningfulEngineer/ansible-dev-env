@@ -28,7 +28,7 @@
 # setxkbmap -query
 # To get the list of available switches: man xkeyboard-config
 # To unset all the options
-# setxkbmap -option 
+# setxkbmap -option
 # Reference for trying to get left alt act as lctrl without swapping
 #  https://unix.stackexchange.com/questions/353490/map-right-alt-to-left-control
 - name: Modify bashrc to have local bin files in the in path and capslock as ctrl
