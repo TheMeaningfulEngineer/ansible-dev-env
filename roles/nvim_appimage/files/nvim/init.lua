@@ -1,12 +1,18 @@
-require "user.plugin"
+require "user.plugins"
 require "user.telescope"
 require "user.cmp"
+
+
+-- Explanation for the letters: https://neovim.io/doc/user/map.html#map-table
+vim.keymap.set({'!','v','o','t','l'}, 'jk', '<C-\\><C-N>')
 
 -- Colorscheme [it's a command not a config :/]
 vim.cmd('colorscheme desert')
 
--- Clever f only loop thorugh single line
-vim.cmd('let g:clever_f_across_no_line = 1')
+
+-- Ignore case if searching for lowercase words
+vim.opt.smartcase = true
+vim.opt.ignorecase = true
 
 -- Tab and auto ident conf
 vim.opt.tabstop = 4
@@ -15,6 +21,10 @@ vim.opt.expandtab = true
 
 -- Autocomplete in default bash style
 vim.opt.wildmode='longest,list'
+
+
+-- Create the new split to the right not to the left
+vim.opt.splitright = true
 
 -- Allow hidden buffers (otherwise all open buffers have to be shown all the time)
 vim.opt.hidden = true
