@@ -7,22 +7,24 @@ require('telescope').load_extension('fzf')
 
 custom_grep_command = {"rg", "--color=never", "--no-heading", "--with-filename", "--line-number", "--column", "--smart-case", "--no-ignore-vcs"}
 
+
 require("telescope").setup {
   defaults = {
     path_display = {"truncate"},
-    vimgrep_arguments = custom_grep_command,
-    pickers = {
-      buffers = {
-        show_all_buffers = true,
-        sort_lastused = true,
-        mappings = {
-          i = {["<c-d>"] = "delete_buffer"}
+    vimgrep_arguments = custom_grep_command
+  },
+  pickers = {
+    buffers = {
+      show_all_buffers = true,
+      sort_lastused = true,
+      mappings = {
+        i = {
+          ["<c-d>"] = "delete_buffer",
         }
       }
     }
   }
 }
-
 
 
 -- Return what is in visual selection
@@ -49,7 +51,24 @@ function live_grep()
 end
 
 
+-- Return what is in visual selection
+function vim.getVisualSelection()
+	vim.cmd('noau normal! "vy"')
+	local text = vim.fn.getreg('v')
+	vim.fn.setreg('v', {})
+
+	text = string.gsub(text, "\n", "")
+	if #text > 0 then
+		return text
+	else
+		return ''
+	end
+end
+
+
 -- Telescope find_files with a custom rg command and ivy theme
+-- Having some issues with initial_mode = "select"
+-- https://github.com/nvim-telescope/telescope.nvim/pull/2092#issuecomment-1204327184
 function find_files()
     function_name = {"rg", "--files", "--no-ignore-vcs" }
     text = vim.getVisualSelection()
