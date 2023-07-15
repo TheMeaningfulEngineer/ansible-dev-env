@@ -12,12 +12,12 @@
       # Local path where the configuration files go
       LOCAL_DOT_CONFIG_PATH: "{{ HOME_USER_DIR }}/.config"
       LOCAL_FONTS_PATH: "{{ HOME_USER_DIR }}/.local/share/fonts/"
-      NVIM_VERSION: "v0.7.2"
+      NVIM_VERSION: "v0.9.1"
 
 
     roles:
-        - local_dirs_requirements
-        - set_keymaps
+      #  - local_dirs_requirements
+      #  - set_keymaps
         - nvim_appimage
-        - install_fonts
-        - nvr_install
+      #  - install_fonts
+      #  - nvr_install
