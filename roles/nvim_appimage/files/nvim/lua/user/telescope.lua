@@ -41,34 +41,15 @@ function vim.getVisualSelection()
 	end
 end
 
--- Start live grep prepopulated with what was visually selected
--- Depends on this: https://github.com/nvim-telescope/telescope.nvim/pull/2092
+-- Start live grep using a a custom rg
 function live_grep()
-    text = vim.getVisualSelection()
-    require("telescope.builtin").live_grep({
-    	initial_mode = "select",
-    	default_text = text})
-end
-
-
--- Return what is in visual selection
-function vim.getVisualSelection()
-	vim.cmd('noau normal! "vy"')
-	local text = vim.fn.getreg('v')
-	vim.fn.setreg('v', {})
-
-	text = string.gsub(text, "\n", "")
-	if #text > 0 then
-		return text
-	else
-		return ''
-	end
+    local function_args = {"rg", "--color=never", "--no-heading", "--with-filename", "--line-number", "--column", "--smart-case", "--no-ignore-vcs"}
+    local builtin = require('telescope.builtin')
+    builtin.live_grep({vimgrep_arguments = function_args})
 end
 
 
 -- Telescope find_files with a custom rg command and ivy theme
--- Having some issues with initial_mode = "select"
--- https://github.com/nvim-telescope/telescope.nvim/pull/2092#issuecomment-1204327184
 function find_files()
     function_name = {"rg", "--files", "--no-ignore-vcs" }
     builtin = require('telescope.builtin')

@@ -24,6 +24,20 @@ When developing , in `main-play.yml` change to `HOME_USER_DIR: "{{ playbook_dir 
 This won't pollute your default home directory.
 Running `tree -a fake_home_user` will give you a good impression on what happened after the playbook executed.
 
+## Ignoring in yocto repo
+
+Below is an example of what needs to be put in .rgignore.
+As a result only the files in `projects/raspberrypi4-dunfell/sources/meta-mender` will be searched.
+
+```
+*
+!projects/
+!projects/raspberrypi3-dunfell/
+!projects/raspberrypi3-dunfell/sources/
+!projects/raspberrypi3-dunfell/sources/meta-mender/
+!projects/raspberrypi3-dunfell/sources/meta-mender/**/*
+```
+
 
 
 # TODO
