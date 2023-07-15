@@ -24,6 +24,21 @@ When developing , in `main-play.yml` change to `HOME_USER_DIR: "{{ playbook_dir 
 This won't pollute your default home directory.
 Running `tree -a fake_home_user` will give you a good impression on what happened after the playbook executed.
 
+## Getting nvim to basic state
+
+```
+rm -rf ~/.cache/nvim
+rm -rf ~/.config/nvim
+rm -rf ~/.local/share/nvim
+```
+
+## For experimenting with new configs
+
+```
+ln -s $(pwd)/roles/nvim_appimage/files/nvim ~/.config/nvim
+```
+
+
 ## Ignoring in yocto repo
 
 Below is an example of what needs to be put in .rgignore.
