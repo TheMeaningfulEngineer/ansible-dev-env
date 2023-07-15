@@ -3,9 +3,6 @@ require "user.telescope"
 require "user.cmp"
 
 
--- Explanation for the letters: https://neovim.io/doc/user/map.html#map-table
-vim.keymap.set({'!','v','o','t','l'}, 'jk', '<C-\\><C-N>')
-
 -- Colorscheme [it's a command not a config :/]
 vim.cmd('colorscheme desert')
 
