@@ -71,11 +71,8 @@ end
 -- https://github.com/nvim-telescope/telescope.nvim/pull/2092#issuecomment-1204327184
 function find_files()
     function_name = {"rg", "--files", "--no-ignore-vcs" }
-    text = vim.getVisualSelection()
     builtin = require('telescope.builtin')
-    builtin.find_files({find_command = function_name,
-                        initial_mode = "select",
-                        default_text = text})
+    builtin.find_files({find_command = function_name})
 end
 
 -- Key mappings
