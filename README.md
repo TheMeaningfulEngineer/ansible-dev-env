@@ -14,7 +14,7 @@ sudo apt-get install ansible
 **Running with the default values will modify files in your home directory.**
 
 ```
-ansible-playbook main-play.yml
+ansible-playbook -K main-play.yml
 ```
 
 
