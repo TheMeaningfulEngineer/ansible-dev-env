@@ -1,10 +1,7 @@
 require "user.plugins"
 require "user.telescope"
 require "user.cmp"
-
-
--- Colorscheme [it's a command not a config :/]
-vim.cmd('colorscheme desert')
+require "user.treesitter"
 
 
 -- Ignore case if searching for lowercase words

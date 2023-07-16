@@ -48,6 +48,14 @@ return packer.startup(function(use)
   use "rhysd/clever-f.vim" -- Useful lua functions used ny lots of plugins
 
 
+  -- Treesitter
+  -- Some workaround for installing with packer
+  -- (https://github.com/nvim-treesitter/nvim-treesitter/issues/3135)
+  use {"nvim-treesitter/nvim-treesitter",
+        run = function() require("nvim-treesitter.install").update { with_sync = true } end}
+  use { "navarasu/onedark.nvim", as = "onedark" }
+  use "nvim-treesitter/playground"
+
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"
