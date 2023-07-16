@@ -29,14 +29,15 @@
         src: nvim
         dest: "{{ LOCAL_DOT_CONFIG_PATH }}"
 
-    - name:  Install xclip needed for system clipboard copy-paste
-      become: yes
-      apt:
-        update_cache: yes
-        cache_valid_time: 3600
-        name: 
-          - xclip
-        state: present
+# Ansible blocking here
+#    - name:  Install xclip needed for system clipboard copy-paste
+#      become: yes
+#      apt:
+#        update_cache: yes
+#        cache_valid_time: 3600
+#        name: 
+#          - xclip
+#        state: present
 
     - name: Modify bashrc to add aliases for vim and vi
       blockinfile:
