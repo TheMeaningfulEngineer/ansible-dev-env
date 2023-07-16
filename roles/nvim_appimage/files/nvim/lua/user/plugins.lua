@@ -56,6 +56,8 @@ return packer.startup(function(use)
   use { "navarasu/onedark.nvim", as = "onedark" }
   use "nvim-treesitter/playground"
 
+  -- Undotree
+  use 'mbbill/undotree'
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"
