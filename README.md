@@ -41,16 +41,15 @@ ln -s $(pwd)/roles/nvim_appimage/files/nvim ~/.config/nvim
 
 ## Ignoring in yocto repo
 
-Below is an example of what needs to be put in .rgignore.
-As a result only the files in `projects/raspberrypi4-dunfell/sources/meta-mender` will be searched.
+Below is an example of what needs to be put in .rgignore for the yocto example where I care only about the meta-mender layer.
 
 ```
-*
-!projects/
-!projects/raspberrypi3-dunfell/
-!projects/raspberrypi3-dunfell/sources/
-!projects/raspberrypi3-dunfell/sources/meta-mender/
-!projects/raspberrypi3-dunfell/sources/meta-mender/**/*
+*build
+*.pyc
+artifacts
+projects/rpi4/*
+projects/rpi3/*
+!projects/rpi4/meta-mender
 ```
 
 

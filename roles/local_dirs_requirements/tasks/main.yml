@@ -21,7 +21,7 @@
     - name: Export local bin to path
       blockinfile:
         path: "{{ HOME_USER_DIR }}/.bashrc"
-        marker: "# {mark} ANSIBLE MANAGED BLOCK [local_dirs]"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK [local_dirs path]"
         create: True
         block: |
           export PATH=$PATH:{{ LOCAL_BIN_PATH }}
@@ -29,7 +29,7 @@
     - name: Set var to trim prompt size
       blockinfile:
         path: "{{ HOME_USER_DIR }}/.bashrc"
-        marker: "# {mark} ANSIBLE MANAGED BLOCK [local_dirs]"
+        marker: "# {mark} ANSIBLE MANAGED BLOCK [local_dirs trim prompt]"
         create: True
         block: |
           PROMPT_DIRTRIM=2
