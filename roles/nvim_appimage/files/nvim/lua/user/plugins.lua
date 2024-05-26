@@ -45,7 +45,6 @@ return packer.startup(function(use)
   -- My plugins here
   use "wbthomason/packer.nvim" -- Have packer manage itself
   use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
-  use "rhysd/clever-f.vim" -- Useful lua functions used ny lots of plugins
 
 
   -- Treesitter
@@ -55,9 +54,6 @@ return packer.startup(function(use)
         run = function() require("nvim-treesitter.install").update { with_sync = true } end}
   use { "navarasu/onedark.nvim", as = "onedark" }
   use "nvim-treesitter/playground"
-
-  -- Undotree
-  use 'mbbill/undotree'
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"
