@@ -4,6 +4,7 @@ require "user.cmp"
 require "user.treesitter"
 
 
+
 -- Ignore case if searching for lowercase words
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
