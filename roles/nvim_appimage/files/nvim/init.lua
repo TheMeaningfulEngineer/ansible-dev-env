@@ -16,12 +16,6 @@ vim.opt.expandtab = true
 -- Autocomplete in default bash style
 vim.opt.wildmode='longest,list'
 
--- Don't usa backup and swap but store undotree history
-vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.undodir = os.getenv("HOME") .. "/.cache/nvim/undodir"
-vim.opt.undofile = true
-
 -- Create the new split to the right not to the left
 vim.opt.splitright = true
 
@@ -55,8 +49,3 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt_local.spell = true
     end
 })
-
--- Highlight whitespace
--- Lua tip - [[ ]] are for string literals and don't need escaping
-vim.cmd('highlight ExtraWhitespace ctermbg=red guibg=red')
-vim.cmd([[match ExtraWhitespace /\s\+$/]])
