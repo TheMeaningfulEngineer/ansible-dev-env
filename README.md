@@ -52,6 +52,67 @@ projects/rpi3/*
 !projects/rpi4/meta-mender
 ```
 
+Or if you want to ignore everything besides meta-mender.
+You have to put one for the directory and then one for all subdirectories.
+
+
+```
+*
+!meta-mender/
+!meta-mender/**
+```
+
+
+# Vim tips
+
+## Regex search and replace
+
+```
+:'<,'>s/\vuse (.*)/\1,/gc
+```
+
+The `\v` is the mode in which you don't have to replace regex.
+In the code above we're replacing:
+
+```
+use (.*) 
+```
+
+Everything after "use " will be put into a group match.
+With:
+
+```
+\1,
+```
+
+The content of the group and a quote.
+
+## Applying a macro
+
+You can record a macro by pressing `qa` (`a` is the register name).
+You than do your stuff and the macro gets recorded.
+You press `q` to stop the recording.
+
+
+To execute the macro press `@a` and it will get executed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # TODO
