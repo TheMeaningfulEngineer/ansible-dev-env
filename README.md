@@ -24,6 +24,37 @@ When developing , in `main-play.yml` change to `HOME_USER_DIR: "{{ playbook_dir 
 This won't pollute your default home directory.
 Running `tree -a fake_home_user` will give you a good impression on what happened after the playbook executed.
 
+
+# Nvim stuff 
+
+## Lazy 
+
+To start the Lazy package manager UI run `:lazy`.
+
+The structure of the plugins is such that
+
+```
+tree ~/.config/nvim/
+├── init.lua
+├── lazy-lock.json
+└── lua
+    ├── archive
+    │   └── cmp.lua
+    └── plugins
+        ├── init.lua
+        ├── telescope.lua
+        └── treesitter.lua
+```
+
+The configuration for big plugins is crammed into the plugin directory.
+i.e. telescope.lua contains both the installation and customisation in the same file
+
+Smaller plugins are still all in init.lua, possible some dependencies as well.
+
+The archive contains the example I haven't migrated yet.
+Would like to get some python language server running but so that it's actually useful.
+
+
 ## Getting nvim to basic state
 
 ```
@@ -62,8 +93,6 @@ You have to put one for the directory and then one for all subdirectories.
 !meta-mender/**
 ```
 
-
-# Vim tips
 
 ## Regex search and replace
 
