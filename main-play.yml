@@ -12,7 +12,7 @@
       # Local path where the configuration files go
       LOCAL_DOT_CONFIG_PATH: "{{ HOME_USER_DIR }}/.config"
       LOCAL_FONTS_PATH: "{{ HOME_USER_DIR }}/.local/share/fonts/"
-      NVIM_VERSION: "v0.10.0"
+      NVIM_VERSION: "v0.10.1"
 
 
     roles:
