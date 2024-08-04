@@ -1,5 +1,23 @@
 # Nvim stuff 
 
+## WIP
+
+I've managed to get the nvim within the terminal to open in the parent.
+
+Start the termnial with this command
+```
+:call termopen([$SHELL], {'env': {'NVIM_SERVER': v:servername}})
+```
+
+and then run it as:
+
+```
+nvim --server "$NVIM_SERVER" --remote README.md`
+```
+
+Haven't translated this into config yet
+
+
 ## Lazy 
 
 To start the Lazy package manager UI run `:lazy`.
