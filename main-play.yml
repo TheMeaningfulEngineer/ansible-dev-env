@@ -12,10 +12,12 @@
       # Local path where the configuration files go
       LOCAL_DOT_CONFIG_PATH: "{{ HOME_USER_DIR }}/.config"
       NVIM_VERSION: "v0.10.1"
+      OBSIDIAN_VERSION: "1.6.7"
 
 
     roles:
       #  - local_dirs_requirements
       #  - set_keymaps
-        - nvim_appimage
+      #   - nvim_appimage
       #  - nvr_install
+        - obsidian_appimage
