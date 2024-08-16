@@ -1,0 +1,48 @@
+---
+
+    - name: Create a directory if it does not exist
+      file:
+        path: "{{ LOCAL_APPIMAGE_PATH }}"
+        state: directory
+        mode: '0755'
+
+    - name: Create a directory if it does not exist
+      file:
+        path: "{{ LOCAL_BIN_PATH }}"
+        state: directory
+        mode: '0755'
+
+        #        https://github.com/obsidianmd/obsidian-releases/releases/download/v1.6.7/Obsidian-1.6.7.AppImage
+        #        https://github.com/opsidianmd/obsidian-releases/releases/download/v1.6.7/Obsidian-1.6.7.AppImage"}
+
+    - name: Download Opsidian
+      get_url:
+        url: "https://github.com/obsidianmd/obsidian-releases/releases/download/v{{ OBSIDIAN_VERSION }}/Obsidian-{{ OBSIDIAN_VERSION }}.AppImage"
+        dest: "{{ LOCAL_APPIMAGE_PATH }}/{{ APPIMAGE_FILENAME }}"
+        mode: 0755
+
+    - name: Create a symbolic link  "{{ LOCAL_APPIMAGE_PATH }}/{{ APPIMAGE_FILENAME }}"
+      file:
+        src: "{{ LOCAL_APPIMAGE_PATH }}/{{ APPIMAGE_FILENAME }}"
+        dest: "{{ LOCAL_BIN_PATH }}/obsidian"
+        state: link
+    
+# Ansible blocking here
+#    - name:  Install xclip needed for system clipboard copy-paste
+#      become: yes
+#      apt:
+#        update_cache: yes
+#        cache_valid_time: 3600
+#        name: 
+#          - xclip
+#        state: present
+
+        #     - name: Modify bashrc to add aliases for vim and vi
+        #       blockinfile:
+        #         path: "{{ HOME_USER_DIR }}/.bashrc"
+        #         marker: "# {mark} ANSIBLE MANAGED BLOCK [nvim]"
+        #         create: True
+        #         block: |
+        #             alias vim=nvim
+        #             alias vi=nvim
+        # 
