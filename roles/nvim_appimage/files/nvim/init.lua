@@ -16,13 +16,6 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup('plugins')
 
 
--- This is the old way how I configured plugin. 
--- Haven't migrated that to the lazy dir structire
--- require "user.cmp"
--- require "user.treesitter"
-
-
-
 -- Ignore case if searching for lowercase words
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
