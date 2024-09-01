@@ -65,7 +65,7 @@ return {
     vim.keymap.set('n', '<C-p>', ':Telescope buffers theme=ivy <CR>')
     vim.keymap.set('n', '<C-n>', ':Telescope buffers theme=ivy <CR>')
     vim.keymap.set('n', '<Leader>m', telescope.marks)
-    vim.api.nvim_set_keymap('n', '<leader>m', '<cmd>Telescope marks<CR>', { noremap = true, silent = true })
+    vim.keymap.set('n', '<Leader>g', telescope.commands)
   end
 }
 
