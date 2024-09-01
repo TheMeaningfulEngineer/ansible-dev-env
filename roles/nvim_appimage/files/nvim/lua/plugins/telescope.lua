@@ -43,6 +43,8 @@ return {
       end
     end
 
+    local telescope = require('telescope.builtin')
+
     -- Function to start live grep with custom rg
     function live_grep()
       local function_args = {"rg", "--color=never", "--no-heading", "--with-filename", "--line-number", "--column", "--smart-case", "--no-ignore-vcs"}
@@ -62,6 +64,8 @@ return {
     vim.keymap.set({'n','v'} , '<Leader>r', live_grep)
     vim.keymap.set('n', '<C-p>', ':Telescope buffers theme=ivy <CR>')
     vim.keymap.set('n', '<C-n>', ':Telescope buffers theme=ivy <CR>')
+    vim.keymap.set('n', '<Leader>m', telescope.marks)
+    vim.api.nvim_set_keymap('n', '<leader>m', '<cmd>Telescope marks<CR>', { noremap = true, silent = true })
   end
 }
 
