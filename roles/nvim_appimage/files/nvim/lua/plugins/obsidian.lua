@@ -13,6 +13,9 @@ return {
         path = "~/vaults/work",
       },
     },
+    daily_notes = {
+      folder = "dailies", -- Specify the subfolder for daily notes
+    },
     ui = {
       enable = false,
     },
