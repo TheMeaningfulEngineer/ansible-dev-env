@@ -53,6 +53,7 @@ vim.api.nvim_create_autocmd("TermOpen", {
     end
 })
 
+vim.cmd('colorscheme catppuccin')
 
 -- Run spellcheck only for certaint file types
 vim.api.nvim_create_autocmd("FileType", {
