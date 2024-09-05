@@ -68,6 +68,7 @@ artifacts
 projects/rpi4/*
 projects/rpi3/*
 !projects/rpi4/meta-mender
+**/build/tmp/**
 ```
 
 Or if you want to ignore everything besides meta-mender.
