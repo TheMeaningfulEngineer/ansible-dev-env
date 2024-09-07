@@ -9,20 +9,11 @@ return {
   config = function()
     -- Setup nvim-treesitter
     require('nvim-treesitter.configs').setup {
-      ensure_installed = { "lua", "python", "markdown", "markdown_inline", "bash", "comment" },
+      ensure_installed = { "lua", "python", "markdown", "markdown_inline", "bash", "comment", "dockerfile", "json", "bitbake"},
       highlight = {
         enable = true,
         additional_vim_regex_highlighting = false,
       }
     }
-
-
-    -- Apply catppuccin colorscheme only for Markdown files
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = "markdown",
-      callback = function()
-        vim.cmd("colorscheme catppuccin")
-      end,
-    })
   end
 }
