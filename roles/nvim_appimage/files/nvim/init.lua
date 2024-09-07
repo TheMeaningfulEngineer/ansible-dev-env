@@ -16,6 +16,10 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup('plugins')
 
 
+vim.keymap.set('n', '<Leader>q', ':ObsidianDailies <CR>')
+vim.keymap.set('n', '<Leader>w', ':ObsidianQuickSwitch <CR>')
+vim.keymap.set('n', '<Leader>e', ':ObsidianTags todo <CR>')
+
 -- Ignore case if searching for lowercase words
 vim.opt.smartcase = true
 vim.opt.ignorecase = true
