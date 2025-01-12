@@ -66,3 +66,13 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt_local.spell = true
     end
 })
+
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldenable = false  -- Disable automatic folding
+vim.opt.foldlevelstart = 99  -- Set fold level to maximum to unfold everything when toggled
+vim.opt.foldminlines = 1  -- Minimum lines for a fold
+vim.opt.foldnestmax = 10   -- Maximum fold depth (adjust as necessary)
+
+
+
