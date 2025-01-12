@@ -29,22 +29,33 @@
         src: nvim
         dest: "{{ LOCAL_DOT_CONFIG_PATH }}"
 
-# Ansible blocking here
-#    - name:  Install xclip needed for system clipboard copy-paste
-#      become: yes
-#      apt:
-#        update_cache: yes
-#        cache_valid_time: 3600
-#        name: 
-#          - xclip
-#        state: present
-
     - name: Modify bashrc to add aliases for vim and vi
       blockinfile:
         path: "{{ HOME_USER_DIR }}/.bashrc"
         marker: "# {mark} ANSIBLE MANAGED BLOCK [nvim]"
         create: True
         block: |
-            alias vim=nvim
-            alias vi=nvim
+            vim() {
+                if [ -n "$NVIM" ]; then
+                    command nvim --server "$NVIM" --remote "$@"
+                else
+                    command nvim "$@"
+                fi
+            }
+            
+            vi() {
+                if [ -n "$NVIM" ]; then
+                    command nvim --server "$NVIM" --remote "$@"
+                else
+                    command nvim "$@"
+                fi
+            }
+            
+            nvim() {
+                if [ -n "$NVIM" ]; then
+                    command nvim --server "$NVIM" --remote "$@"
+                else
+                    command nvim "$@"
+                fi
+            }
 
