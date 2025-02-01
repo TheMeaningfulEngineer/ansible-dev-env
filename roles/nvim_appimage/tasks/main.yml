@@ -37,7 +37,7 @@
         block: |
             vim() {
                 if [ -n "$NVIM" ]; then
-                    command nvim --server "$NVIM" --remote "$@"
+                    command nvim --server "$nvim" --remote "$(realpath $@)"
                 else
                     command nvim "$@"
                 fi
@@ -45,17 +45,8 @@
             
             vi() {
                 if [ -n "$NVIM" ]; then
-                    command nvim --server "$NVIM" --remote "$@"
+                    command nvim --server "$nvim" --remote "$(realpath $@)"
                 else
                     command nvim "$@"
                 fi
             }
-            
-            nvim() {
-                if [ -n "$NVIM" ]; then
-                    command nvim --server "$NVIM" --remote "$@"
-                else
-                    command nvim "$@"
-                fi
-            }
-
