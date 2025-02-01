@@ -1,42 +1,26 @@
 ---
-- name: Modify bashrc to have local bin files in the in path and capslock as ctrl
-  become: yes
-  blockinfile:
-    path: "/usr/share/X11/xkb/symbols/ctrl"
-    marker: "// {mark} ANSIBLE MANAGED BLOCK"
-    create: True
-    block: |
-        // Left Alt key functions as another left Ctrl.
-        partial modifier_keys
-        xkb_symbols "lalt_lctrl" {
-            replace key <LALT> { [ Control_L, Control_L ] };
-            modifier_map Control { <LALT> };
-        };
+# roles/set_keymaps/tasks/main.yml
+# Only tasks: no top-level play or "hosts" statements.
 
+- name: Ensure dconf is installed
+  become: true
+  apt:
+    name: dconf-cli
+    state: present
 
-- become: yes
-  lineinfile:
-    path: /usr/share/X11/xkb/rules/evdev
-    insertafter: 'ctrl:rctrl_ralt'
-    line: '  ctrl:lalt_lctrl       =       +ctrl(lalt_lctrl)'
+- name: Set Caps Lock to Control (GNOME Wayland)
+  become: false
+  command: >
+    gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps']"
+  changed_when: true
 
+- name: Verify the setting
+  become: false
+  command: >
+    gsettings get org.gnome.desktop.input-sources xkb-options
+  register: gsettings_output
+  changed_when: false
 
-# TODO: I'm still not clear if I want to have 
-# right alt serve as the ctrl key.
-# ref:  setxkbmap -option ctrl:swap_lalt_lctl
-# Also checking out what keyboard options are set is done with
-# setxkbmap -query
-# To get the list of available switches: man xkeyboard-config
-# To unset all the options
-# setxkbmap -option
-# Reference for trying to get left alt act as lctrl without swapping
-#  https://unix.stackexchange.com/questions/353490/map-right-alt-to-left-control
-- name: Modify bashrc to have local bin files in the in path and capslock as ctrl
-  blockinfile:
-    path: "{{ HOME_USER_DIR }}/.bashrc"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK [key_bindings]"
-    create: True
-    block: |
-      setxkbmap -option ctrl:nocaps
-      setxkbmap -option ctrl:lalt_lctrl
-      setxkbmap -option ctrl:ralt_rctrl
+- name: Debug output
+  debug:
+    msg: "{{ gsettings_output.stdout }}"
