@@ -68,7 +68,9 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldtext = "getline(v:foldstart)"  -- Just show the first line
+
 vim.opt.foldenable = false  -- Disable automatic folding
 vim.opt.foldlevelstart = 99  -- Set fold level to maximum to unfold everything when toggled
 vim.opt.foldminlines = 1  -- Minimum lines for a fold
