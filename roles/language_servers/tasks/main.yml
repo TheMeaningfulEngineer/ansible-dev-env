@@ -1,0 +1,32 @@
+- name: Download Lua Language Server
+  ansible.builtin.get_url:
+    url: "https://github.com/LuaLS/lua-language-server/releases/download/{{ LS_LUA_VERSION }}/lua-language-server-{{ LS_LUA_VERSION }}-linux-x64.tar.gz"
+    dest: "/tmp/lua-language-server-{{ LS_LUA_VERSION }}-linux-x64.tar.gz"
+
+- name: Ensure ~/.local/share/lua-language-server directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.local/share/lua-language-server"
+    state: directory
+
+- name: Extract Lua Language Server (preserve top-level directory)
+  ansible.builtin.unarchive:
+    src: "/tmp/lua-language-server-{{ LS_LUA_VERSION }}-linux-x64.tar.gz"
+    dest: "{{ ansible_env.HOME }}/.local/share/lua-language-server"
+    remote_src: yes
+    extra_opts:
+      - "--one-top-level"
+    # This ensures we don't re-extract if the folder already exists
+    creates: "{{ ansible_env.HOME }}/.local/share/lua-language-server/lua-language-server-{{ LS_LUA_VERSION }}-linux-x64"
+
+- name: Ensure ~/.local/bin exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.local/bin"
+    state: directory
+
+- name: Symlink lua-language-server into ~/.local/bin
+  ansible.builtin.file:
+    src: "{{ ansible_env.HOME }}/.local/share/lua-language-server/lua-language-server-{{ LS_LUA_VERSION }}-linux-x64/bin/lua-language-server"
+    dest: "{{ ansible_env.HOME }}/.local/bin/lua-language-server"
+    state: link
+    force: yes
+    follow: false
