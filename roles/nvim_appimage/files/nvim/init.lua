@@ -1,4 +1,4 @@
--- Lazy plugin manager setup
+-- Clone Lazy and add it to nvim path
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
@@ -14,6 +14,31 @@ vim.opt.rtp:prepend(lazypath)
 
 -- The plugins are located in ~/.config/nvim/lua/plugins
 require('lazy').setup('plugins')
+
+-- This is an example for a single plugin
+--require("lazy").setup({
+--  {
+--    "neovim/nvim-lspconfig", -- Plugin repository
+--    opts = {                 -- Plugin options ( require("plugin_name").setup(opts) )
+--      servers = { pyright = {} },
+--    },
+--  }
+--})
+
+-- config when you need extra setup beyond opts
+-- You manually invoke the setup call of the plugin
+-- {
+--  "neovim/nvim-lspconfig",
+--  opts = { servers = { pyright = {} } },
+--  config = function(plugin, opts)
+--    require("lspconfig").pyright.setup(opts.servers.pyright)
+--    print("LSP setup complete!")
+--  end
+--}
+
+
+
+
 
 
 vim.keymap.set('n', '<Leader>q', ':ObsidianDailies <CR>')
