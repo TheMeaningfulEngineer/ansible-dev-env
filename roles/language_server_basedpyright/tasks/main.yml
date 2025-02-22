@@ -1,0 +1,17 @@
+---
+- name: Install basedpyright in ~/.local
+  npm:
+    name: basedpyright
+    path: "{{ ansible_env.HOME }}/.local"
+
+- name: Symlink basedpyright
+  file:
+    src: "{{ ansible_env.HOME }}/.local/node_modules/.bin/basedpyright"
+    dest: "{{ ansible_env.HOME }}/.local/bin/basedpyright"
+    state: link
+
+- name: Symlink basedpyright-langserver
+  file:
+    src: "{{ ansible_env.HOME }}/.local/node_modules/.bin/basedpyright-langserver"
+    dest: "{{ ansible_env.HOME }}/.local/bin/basedpyright-langserver"
+    state: link

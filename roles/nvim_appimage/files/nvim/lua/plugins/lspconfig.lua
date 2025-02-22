@@ -12,15 +12,31 @@ return {
     }
   },
   config = function()
-require("lspconfig").lua_ls.setup{
-  settings = {
-    Lua = {
-      workspace = {
-        preloadFileSize = 1000, -- 1MB limit
-        ignoreDir = { ".git", "node_modules" }
+    local lspconfig = require("lspconfig")
+
+    -- Lua language server setup
+    lspconfig.lua_ls.setup{
+      settings = {
+        Lua = {
+          workspace = {
+            preloadFileSize = 1000, -- 1MB limit
+            ignoreDir = { ".git", "node_modules" }
+          }
+        }
       }
     }
-  }
-} end
+
+    lspconfig.basedpyright.setup{
+      settings = {
+        basedpyright = {
+          analysis = {
+            autoSearchPaths = true,
+            diagnosticMode = "openFilesOnly",
+            useLibraryCodeForTypes = true
+          }
+        }
+      }
+    }
+  end
 }
 
