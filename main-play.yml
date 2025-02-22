@@ -25,4 +25,5 @@
       #  - nvr_install
       #   - fzf_install
       #  - obsidian_appimage
-       - language_servers
+       - language_server_lua
+       - language_server_basedpyrigt
