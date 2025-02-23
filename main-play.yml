@@ -26,4 +26,5 @@
       #   - fzf_install
       #  - obsidian_appimage
        - language_server_lua
-       - language_server_basedpyrigt
+       - language_server_basedpyright
+       - language_server_bash
