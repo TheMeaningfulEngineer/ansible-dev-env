@@ -66,6 +66,8 @@ return {
     vim.keymap.set('n', '<C-n>', ':Telescope buffers theme=ivy <CR>')
     vim.keymap.set('n', '<Leader>m', telescope.marks)
     vim.keymap.set('n', '<Leader>g', telescope.commands)
+    vim.keymap.set('n', 'gr', function() telescope.lsp_references({ jump_type = "never" }) end)
+    vim.keymap.set('n', 'gd', telescope.lsp_definitions)
   end
 }
 
