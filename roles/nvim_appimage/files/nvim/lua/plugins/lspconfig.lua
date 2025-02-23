@@ -12,31 +12,8 @@ return {
     }
   },
   config = function()
-    local lspconfig = require("lspconfig")
-
-    -- Lua language server setup
-    lspconfig.lua_ls.setup{
-      settings = {
-        Lua = {
-          workspace = {
-            preloadFileSize = 1000, -- 1MB limit
-            ignoreDir = { ".git", "node_modules" }
-          }
-        }
-      }
-    }
-
-    lspconfig.basedpyright.setup{
-      settings = {
-        basedpyright = {
-          analysis = {
-            autoSearchPaths = true,
-            diagnosticMode = "openFilesOnly",
-            useLibraryCodeForTypes = true
-          }
-        }
-      }
-    }
+    -- This executes the command doesn't actually import anything
+    require("lsp") -- Loads `lua/lsp/init.lua`, which loads all LSPs
   end
 }
 
