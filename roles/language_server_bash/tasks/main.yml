@@ -1,0 +1,11 @@
+---
+- name: Install bash-language-server in ~/.local
+  npm:
+    name: bash-language-server
+    path: "{{ ansible_env.HOME }}/.local"
+
+- name: Symlink bash-language-server
+  file:
+    src: "{{ ansible_env.HOME }}/.local/node_modules/.bin/bash-language-server"
+    dest: "{{ ansible_env.HOME }}/.local/bin/bash-language-server"
+    state: link
