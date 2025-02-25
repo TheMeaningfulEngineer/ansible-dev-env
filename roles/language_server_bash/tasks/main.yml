@@ -1,4 +1,35 @@
----
+- name: Download ShellCheck version {{ SHELLCHECK_VERSION }}
+  get_url:
+    url: "https://github.com/koalaman/shellcheck/releases/download/v{{ SHELLCHECK_VERSION }}/shellcheck-v{{ SHELLCHECK_VERSION }}.linux.x86_64.tar.xz"
+    dest: "/tmp/shellcheck.tar.xz"
+
+- name: Extract ShellCheck
+  unarchive:
+    src: "/tmp/shellcheck.tar.xz"
+    dest: "/tmp"
+    remote_src: yes
+
+- name: Move ShellCheck to ~/.local/bin
+  command: mv /tmp/shellcheck-v{{ SHELLCHECK_VERSION }}/shellcheck "{{ ansible_env.HOME }}/.local/bin/shellcheck"
+  args:
+    creates: "{{ ansible_env.HOME }}/.local/bin/shellcheck"
+
+- name: Download shfmt version {{ SHFMT_VERSION }}
+  get_url:
+    url: "https://github.com/mvdan/sh/releases/download/v{{ SHFMT_VERSION }}/shfmt_v{{ SHFMT_VERSION }}_linux_amd64"
+    dest: "/tmp/shfmt"
+
+- name: Move shfmt to ~/.local/bin and make executable
+  command: mv /tmp/shfmt "{{ ansible_env.HOME }}/.local/bin/shfmt"
+  args:
+    creates: "{{ ansible_env.HOME }}/.local/bin/shfmt"
+
+- name: Set executable permissions for shfmt
+  file:
+    path: "{{ ansible_env.HOME }}/.local/bin/shfmt"
+    mode: "0755"
+
+
 - name: Install bash-language-server in ~/.local
   npm:
     name: bash-language-server
