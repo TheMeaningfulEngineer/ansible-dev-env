@@ -7,6 +7,7 @@ return {
         bashIde = {
           globPattern = "*@(.sh|.inc|.bash|.command|.zsh)",
           shellcheckPath = "shellcheck",
+          shfmtPath = "shfmt",
           enableSourceErrorDiagnostics = true,
         },
       },
