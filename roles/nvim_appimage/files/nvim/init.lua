@@ -37,6 +37,9 @@ require('lazy').setup('plugins')
 --}
 
 
+vim.o.exrc = true  -- Enable per-project configurations
+vim.o.secure = true  -- Prevents unsafe commands from running automatically
+
 vim.keymap.set('n', '<Leader>q', ':ObsidianDailies <CR>')
 vim.keymap.set('n', '<Leader>w', ':ObsidianQuickSwitch <CR>')
 vim.keymap.set('n', '<Leader>e', ':ObsidianTags todo <CR>')
