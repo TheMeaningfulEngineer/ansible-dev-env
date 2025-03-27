@@ -13,7 +13,7 @@
       LOCAL_DOT_CONFIG_PATH: "{{ HOME_USER_DIR }}/.config"
       NVIM_VERSION: "v0.10.3"
       OBSIDIAN_VERSION: "1.7.7"
-      # FZF_VERSION: "v0.55.0"
+      FZF_VERSION: "v0.55.0"
       LS_LUA_VERSION: "3.13.6"
       # This is for the bash ls
       SHELLCHECK_VERSION: "0.10.0"
@@ -21,12 +21,11 @@
 
 
     roles:
-      #  - set_keymaps
-      #  - local_dirs_requirements
-      #  - nvim_appimage
-      #  - nvr_install
-      #   - fzf_install
-      #  - obsidian_appimage
-      # - language_server_lua
-      # - language_server_basedpyright
-        - language_server_bash
+       - set_keymaps
+       - local_dirs_requirements
+       - nvim_appimage
+       - fzf_install
+       - obsidian_appimage
+       - language_server_lua
+       - language_server_basedpyright
+       - language_server_bash
