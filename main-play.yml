@@ -11,7 +11,7 @@
       LOCAL_BIN_PATH: "{{ HOME_USER_DIR }}/.local/bin"
       # Local path where the configuration files go
       LOCAL_DOT_CONFIG_PATH: "{{ HOME_USER_DIR }}/.config"
-      NVIM_VERSION: "v0.10.3"
+      NVIM_VERSION: "v0.11.0"
       OBSIDIAN_VERSION: "1.7.7"
       FZF_VERSION: "v0.55.0"
       LS_LUA_VERSION: "3.13.6"
