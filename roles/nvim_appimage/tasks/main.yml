@@ -14,7 +14,7 @@
 
     - name: Download Neovim
       get_url:
-        url: "https://github.com/neovim/neovim/releases/download/{{ NVIM_VERSION }}/nvim.appimage"
+        url: "https://github.com/neovim/neovim/releases/download/{{ NVIM_VERSION }}/nvim-linux-x86_64.appimage"
         dest: "{{ LOCAL_APPIMAGE_PATH }}/{{ APPIMAGE_FILENAME }}"
         mode: 0755
 
@@ -37,7 +37,7 @@
         block: |
             vim() {
                 if [ -n "$NVIM" ]; then
-                    command nvim --server "$nvim" --remote "$(realpath $@)"
+                    command nvim --server "$NVIM" --remote "$(realpath $@)"
                 else
                     command nvim "$@"
                 fi
@@ -45,7 +45,7 @@
             
             vi() {
                 if [ -n "$NVIM" ]; then
-                    command nvim --server "$nvim" --remote "$(realpath $@)"
+                    command nvim --server "$NVIM" --remote "$(realpath $@)"
                 else
                     command nvim "$@"
                 fi
