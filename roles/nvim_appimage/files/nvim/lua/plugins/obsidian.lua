@@ -1,39 +1,39 @@
 return {
   "epwalsh/obsidian.nvim",
-  version = "*",  -- recommended, use latest release instead of latest commit
+  version = "*", -- use latest release
   dependencies = {
-    -- Required.
     "nvim-lua/plenary.nvim",
-    "hrsh7th/nvim-cmp", -- The completion plugin
+    "hrsh7th/nvim-cmp",
   },
-  opts = {
-    workspaces = {
-      {
-        name = "work",
-        path = "~/vaults/work",
+  config = function()
+    vim.keymap.set('n', '<Leader>q', ':ObsidianDailies<CR>')
+    vim.keymap.set('n', '<Leader>w', ':ObsidianQuickSwitch<CR>')
+    vim.keymap.set('n', '<Leader>e', ':ObsidianTags todo<CR>')
+
+    require("obsidian").setup({
+      workspaces = {
+        {
+          name = "personal",
+          path = "~/vaults/personal",
+        },
       },
-      {
-        name = "personal",
-        path = "~/vaults/personal",
+      daily_notes = {
+        folder = "dailies",
       },
-    },
-    daily_notes = {
-      folder = "dailies", -- Specify the subfolder for daily notes
-    },
-    ui = {
-      enable = false,
-    },
-    wiki_link_func = "use_alias_only",
-    note_id_func = function(title)
+      ui = {
+        enable = false,
+      },
+      wiki_link_func = "use_alias_only",
+      note_id_func = function(title)
       -- Convert the title to a valid file name.
       -- This removes any special characters and replaces spaces with dashes.
       local id = title:gsub("%s+", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
-      return id
-    end,
-    note_path_func = function(spec)
-      -- Construct the file path using the sanitized title.
-      local path = spec.dir / spec.id
-      return path:with_suffix(".md")
-    end,
-  },
+        return id
+      end,
+      note_path_func = function(spec)
+        local path = spec.dir / spec.id
+        return path:with_suffix(".md")
+      end,
+    })
+  end,
 }
