@@ -1,2 +1,2 @@
 ---
-APPIMAGE_FILENAME: "oBsidian.{{ OBSIDIAN_VERSION }}.appimage"
+APPIMAGE_FILENAME: "obsidian.{{ OBSIDIAN_VERSION }}.appimage"
