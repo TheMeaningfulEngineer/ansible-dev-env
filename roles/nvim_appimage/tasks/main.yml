@@ -12,6 +12,13 @@
         state: directory
         mode: '0755'
 
+    - name: Install wl-clipboard
+      become: true
+      apt:
+        name: wl-clipboard
+        state: present
+        update_cache: true
+
     - name: Download Neovim
       get_url:
         url: "https://github.com/neovim/neovim/releases/download/{{ NVIM_VERSION }}/nvim-linux-x86_64.appimage"
