@@ -109,5 +109,6 @@ vim.opt.foldminlines = 1  -- Minimum lines for a fold
 vim.opt.foldnestmax = 10   -- Maximum fold depth (adjust as necessary)
 
 
+-- Highlight active window in a split
 local normal_bg = vim.api.nvim_get_hl(0, { name = "Normal" }).bg
 vim.api.nvim_set_hl(0, "NormalNC", { bg = normal_bg and normal_bg - 0x101010 })
