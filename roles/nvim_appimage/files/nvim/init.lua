@@ -66,6 +66,18 @@ vim.opt.hlsearch = false
 
 -- Default to copying to clipboard
 vim.opt.clipboard = 'unnamedplus'
+vim.g.clipboard = {
+  name = "wl-clipboard",
+  copy = {
+    ["+"] = "wl-copy --foreground --type text/plain",
+    ["*"] = "wl-copy --foreground --type text/plain",
+  },
+  paste = {
+    ["+"] = "wl-paste --no-newline",
+    ["*"] = "wl-paste --no-newline",
+  },
+  cache_enabled = 1,
+}
 
 -- Show numbers on the side but don't show it for the terminal
 vim.opt.number = true
