@@ -1,28 +1,19 @@
 ---
 
-    - name: Create a directory if it does not exist
-      file:
-        path: "{{ LOCAL_APPIMAGE_PATH }}"
-        state: directory
-        mode: '0755'
+- name: Download Obsidian .deb
+  get_url:
+    url: "https://github.com/obsidianmd/obsidian-releases/releases/download/v{{ OBSIDIAN_VERSION }}/obsidian_{{ OBSIDIAN_VERSION }}_amd64.deb"
+    dest: "/tmp/obsidian_{{ OBSIDIAN_VERSION }}_amd64.deb"
+    mode: '0644'
 
-    - name: Create a directory if it does not exist
-      file:
-        path: "{{ LOCAL_BIN_PATH }}"
-        state: directory
-        mode: '0755'
+- name: Install Obsidian .deb
+  become: true
+  apt:
+    deb: "/tmp/obsidian_{{ OBSIDIAN_VERSION }}_amd64.deb"
+    state: present
 
-        #        https://github.com/obsidianmd/obsidian-releases/releases/download/v1.6.7/Obsidian-1.6.7.AppImage
-        #        https://github.com/opsidianmd/obsidian-releases/releases/download/v1.6.7/Obsidian-1.6.7.AppImage"}
+- name: Remove Obsidian .deb after install
+  file:
+    path: "/tmp/obsidian_{{ OBSIDIAN_VERSION }}_amd64.deb"
+    state: absent
 
-    - name: Download Opsidian
-      get_url:
-        url: "https://github.com/obsidianmd/obsidian-releases/releases/download/v{{ OBSIDIAN_VERSION }}/Obsidian-{{ OBSIDIAN_VERSION }}.AppImage"
-        dest: "{{ LOCAL_APPIMAGE_PATH }}/{{ APPIMAGE_FILENAME }}"
-        mode: 0755
-
-    - name: Create a symbolic link  "{{ LOCAL_APPIMAGE_PATH }}/{{ APPIMAGE_FILENAME }}"
-      file:
-        src: "{{ LOCAL_APPIMAGE_PATH }}/{{ APPIMAGE_FILENAME }}"
-        dest: "{{ LOCAL_BIN_PATH }}/obsidian"
-        state: link
