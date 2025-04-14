@@ -12,6 +12,17 @@
         state: directory
         mode: '0755'
 
+# For compiling fzf something needed for telescope
+    - name: Install make and build tools for compiling telescope fzf
+      become: true
+      apt:
+        name:
+          - make
+          - build-essential
+        state: present
+        update_cache: true
+
+# For copying on wayland
     - name: Install wl-clipboard
       become: true
       apt:

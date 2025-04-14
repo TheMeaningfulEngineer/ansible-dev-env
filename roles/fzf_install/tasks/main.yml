@@ -23,4 +23,5 @@
         marker: "# {mark} ANSIBLE MANAGED BLOCK [fzf]"
         create: True
         block: |
-            export FZF_DEFAULT_COMMAND='rg --files'
+          export FZF_DEFAULT_COMMAND='rg --files'
+          [ -f ~/.fzf.bash ] && source ~/.fzf.bash
