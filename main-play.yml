@@ -12,8 +12,8 @@
       # Local path where the configuration files go
       LOCAL_DOT_CONFIG_PATH: "{{ HOME_USER_DIR }}/.config"
       NVIM_VERSION: "v0.11.0"
-      OBSIDIAN_VERSION: "1.7.7"
-      FZF_VERSION: "v0.55.0"
+      OBSIDIAN_VERSION: "1.8.9"
+      FZF_VERSION: "v0.61.1"
       LS_LUA_VERSION: "3.13.6"
       # This is for the bash ls
       SHELLCHECK_VERSION: "0.10.0"
