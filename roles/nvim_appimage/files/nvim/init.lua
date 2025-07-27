@@ -91,6 +91,8 @@ vim.api.nvim_create_autocmd("TermOpen", {
 
 vim.cmd('colorscheme catppuccin')
 
+vim.g.have_nerd_font = false
+
 -- Run spellcheck only for certaint file types
 vim.api.nvim_create_autocmd("FileType", {
     pattern = {"markdown", "gitcommit"},
@@ -112,3 +114,10 @@ vim.opt.foldnestmax = 10   -- Maximum fold depth (adjust as necessary)
 -- Highlight active window in a split
 local normal_bg = vim.api.nvim_get_hl(0, { name = "Normal" }).bg
 vim.api.nvim_set_hl(0, "NormalNC", { bg = normal_bg and normal_bg - 0x101010 })
+
+
+
+-- Remove unused mappings so they don't polute my suggestion space
+vim.keymap.del("n", "gx")       -- removes gx after Lazy loads keymaps
+vim.keymap.del("n", "gO")       -- removes gx after Lazy loads keymaps
+

@@ -12,6 +12,11 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 local lsp_dir = debug.getinfo(1, "S").source:sub(2):match("(.*/)")
 local lsp_files = vim.fn.globpath(lsp_dir, "*.lua", false, true)
 
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+vim.keymap.set("n", "gr", require("telescope.builtin").lsp_references, { desc = "Find references" })
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename symbol" })
+vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Show LSP diagnostics in a floating window" })
+
 -- Load each LSP config and call setup
 for _, file in ipairs(lsp_files) do
   local server = file:match("([^/]+)%.lua$") -- Extract filename without `.lua`
