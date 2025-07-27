@@ -5,12 +5,17 @@ return {
       settings = {
         basedpyright = {
           analysis = {
+            typeCheckingMode = "basic",
             autoSearchPaths = true,
             diagnosticMode = "openFilesOnly",
-            useLibraryCodeForTypes = true
+            useLibraryCodeForTypes = true,
+            rules = {
+              reportUnusedCallResult = "none"
+            }
           }
         }
       }
     })
   end
 }
+
