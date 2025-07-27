@@ -1,5 +1,5 @@
 return {
-  "epwalsh/obsidian.nvim",
+  "obsidian-nvim/obsidian.nvim",
   version = "*", -- use latest release
   dependencies = {
     "nvim-lua/plenary.nvim",
@@ -8,13 +8,14 @@ return {
   config = function()
     vim.keymap.set('n', '<Leader>q', ':ObsidianDailies<CR>')
     vim.keymap.set('n', '<Leader>w', ':ObsidianQuickSwitch<CR>')
-    vim.keymap.set('n', '<Leader>e', ':ObsidianTags todo<CR>')
+    vim.keymap.set('n', '<Leader>t', ':ObsidianTags<CR>')
+    vim.keymap.set('n', '<Leader>s', ':ObsidianSearch<CR>')
 
     require("obsidian").setup({
       workspaces = {
         {
-          name = "personal",
-          path = "~/vaults/personal",
+          name = "work",
+          path = "~/vaults/work",
         },
       },
       daily_notes = {
