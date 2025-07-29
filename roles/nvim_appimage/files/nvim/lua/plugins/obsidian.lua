@@ -6,12 +6,13 @@ return {
     "hrsh7th/nvim-cmp",
   },
   config = function()
-    vim.keymap.set('n', '<Leader>q', ':ObsidianDailies<CR>')
-    vim.keymap.set('n', '<Leader>w', ':ObsidianQuickSwitch<CR>')
-    vim.keymap.set('n', '<Leader>t', ':ObsidianTags<CR>')
-    vim.keymap.set('n', '<Leader>s', ':ObsidianSearch<CR>')
+    vim.keymap.set('n', '<Leader>q', ':Obsidian dailies<CR>')
+    vim.keymap.set('n', '<Leader>w', ':Obsidian quick_switch<CR>')
+    vim.keymap.set('n', '<Leader>t', ':Obsidian tags<CR>')
+    vim.keymap.set('n', '<Leader>s', ':Obsidian search<CR>')
 
     require("obsidian").setup({
+      legacy_commands = false,
       workspaces = {
         {
           name = "work",
