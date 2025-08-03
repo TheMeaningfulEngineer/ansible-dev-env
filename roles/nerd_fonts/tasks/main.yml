@@ -6,14 +6,26 @@
     dest: "{{ ansible_env.HOME }}/.local/src/nerd-fonts"
     depth: 1
     update: yes
+  become: false
+
+- name: Ensure install.sh is executable
+  file:
+    path: "{{ ansible_env.HOME }}/.local/src/nerd-fonts/install.sh"
+    mode: '0755'
+  become: false
 
 - name: Install JetBrainsMono Nerd Font
-  command: ./install.sh JetBrainsMono
+  command: ./install.sh -s JetBrainsMono
   args:
     chdir: "{{ ansible_env.HOME }}/.local/src/nerd-fonts"
+    creates: "{{ ansible_env.HOME }}/.local/share/fonts/JetBrainsMono\ Nerd\ Font\ Complete.ttf"
+  become: false
 
 - name: Refresh font cache
   command: fc-cache -f -v
+  environment:
+    HOME: "{{ ansible_env.HOME }}"
+  become: false
 
 
 
