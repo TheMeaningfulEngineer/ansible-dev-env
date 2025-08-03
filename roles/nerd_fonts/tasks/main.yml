@@ -1,0 +1,36 @@
+---
+
+- name: Clone or update nerd-fonts repo (shallow)
+  git:
+    repo: https://github.com/ryanoasis/nerd-fonts.git
+    dest: "{{ ansible_env.HOME }}/.local/src/nerd-fonts"
+    depth: 1
+    update: yes
+
+- name: Install JetBrainsMono Nerd Font
+  command: ./install.sh JetBrainsMono
+  args:
+    chdir: "{{ ansible_env.HOME }}/.local/src/nerd-fonts"
+
+- name: Refresh font cache
+  command: fc-cache -f -v
+
+
+
+- name: Get GNOME Terminal default profile ID
+  command: gsettings get org.gnome.Terminal.ProfilesList default
+  register: default_profile
+  changed_when: false
+
+- name: Disable “use system font” in that profile
+  command: >
+    gsettings set
+    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ default_profile.stdout | trim("'") }}/
+    use-system-font false
+
+- name: Set JetBrains Mono Nerd Font size 15 in that profile
+  command: >
+    gsettings set
+    org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{{ default_profile.stdout | trim("'") }}/
+    font 'JetBrainsMono NF 15'
+
