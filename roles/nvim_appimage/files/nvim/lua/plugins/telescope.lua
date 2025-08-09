@@ -46,17 +46,36 @@ return {
     local telescope = require('telescope.builtin')
 
     -- Function to start live grep with custom rg
-    function live_grep()
-      local function_args = {"rg", "--color=never", "--no-heading", "--with-filename", "--line-number", "--column", "--smart-case", "--no-ignore-vcs"}
-      local builtin = require('telescope.builtin')
-      builtin.live_grep({vimgrep_arguments = function_args})
+    function live_grep(dir)
+      local args = {
+        "rg",
+        "--color=never",
+        "--no-heading",
+        "--with-filename",
+        "--line-number",
+        "--column",
+        "--smart-case",
+        "--no-ignore-vcs",
+      }
+    
+      local target_dir = dir or vim.loop.cwd()
+    
+      require("telescope.builtin").live_grep({
+        vimgrep_arguments = args,
+        cwd = target_dir,
+        search_dirs = { target_dir },  -- limits grep to file content in the directory
+      })
     end
 
+    
     -- Function to find files with custom rg command and ivy theme
-    function find_files()
-      local function_name = {"rg", "--files", "--no-ignore-vcs" }
-      local builtin = require('telescope.builtin')
-      builtin.find_files({find_command = function_name})
+    --
+    function find_files(dir)
+      local cmd = { "rg", "--files", "--no-ignore-vcs" }
+      require("telescope.builtin").find_files({
+        find_command = cmd,
+        cwd = dir or vim.loop.cwd(),
+      })
     end
 
     -- Key mappings
@@ -66,8 +85,21 @@ return {
     vim.keymap.set('n', '<C-n>', ':Telescope buffers theme=ivy <CR>')
     vim.keymap.set('n', '<Leader>m', telescope.marks)
     vim.keymap.set('n', '<Leader>g', telescope.commands)
-    vim.keymap.set('n', 'gr', function() telescope.lsp_references({ jump_type = "never" }) end)
-    vim.keymap.set('n', 'gd', telescope.lsp_definitions)
+
+    local function if_dir_exists(dir, fn)
+      return function()
+        if vim.fn.isdirectory(vim.fn.expand(dir)) == 1 then
+          fn(dir)
+        else
+          vim.notify("Directory " .. dir .. " not found", vim.log.levels.WARN)
+        end
+      end
+    end
+
+    vim.keymap.set('n', '<leader>df', if_dir_exists('/home/alan-nt/workspace/all-docs/raw-content', find_files),
+      { desc = "Find files in all-docs" })
+    vim.keymap.set('n', '<leader>dr', if_dir_exists('/home/alan-nt/workspace/all-docs/raw-content', live_grep),
+      { desc = "Grep in all-docs" })
   end
 }
 
