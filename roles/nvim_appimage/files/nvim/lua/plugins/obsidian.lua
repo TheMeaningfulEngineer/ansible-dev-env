@@ -18,8 +18,8 @@ return {
       disable_frontmatter = true,
       workspaces = {
         {
-          name = "test",
-          path = "~/vault-experiments/obsidian-aboutness-story-demo-3",
+          name = "work",
+          path = "~/vaults/work",
         },
         {
           name = "personal",
