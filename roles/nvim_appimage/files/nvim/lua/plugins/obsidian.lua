@@ -10,6 +10,8 @@ return {
     vim.keymap.set('n', '<Leader>w', ':Obsidian quick_switch<CR>')
     vim.keymap.set('n', '<Leader>t', ':Obsidian tags<CR>')
     vim.keymap.set('n', '<Leader>s', ':Obsidian search<CR>')
+    vim.keymap.set('n', 'gf', ':Obsidian follow_link<CR>')
+
 
     require("obsidian").setup({
       legacy_commands = false,
@@ -17,7 +19,7 @@ return {
       workspaces = {
         {
           name = "work",
-          path = "~/vaults/work",
+          path = "~/vault-experiments/obsidian-aboutness-story-demo-v2",
         },
       },
       daily_notes = {
