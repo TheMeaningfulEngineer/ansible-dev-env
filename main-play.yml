@@ -11,9 +11,9 @@
       LOCAL_BIN_PATH: "{{ HOME_USER_DIR }}/.local/bin"
       # Local path where the configuration files go
       LOCAL_DOT_CONFIG_PATH: "{{ HOME_USER_DIR }}/.config"
-      NVIM_VERSION: "v0.11.3"
+      NVIM_VERSION: "v0.11.5"
       OBSIDIAN_VERSION: "1.8.9"
-      FZF_VERSION: "v0.61.1"
+      FZF_VERSION: "v0.67.0"
       LS_LUA_VERSION: "3.13.6"
       # This is for the bash ls
       SHELLCHECK_VERSION: "0.10.0"
@@ -21,11 +21,11 @@
 
 
     roles:
-      - nerd_fonts
+      # - nerd_fonts
       #  - set_keymaps
       #  - local_dirs_requirements
-      #  - nvim_appimage
-      #  - fzf_install
+        - nvim_appimage
+        - fzf_install
       #  - obsidian_appimage
       #  - language_server_lua
       #  - language_server_basedpyright
