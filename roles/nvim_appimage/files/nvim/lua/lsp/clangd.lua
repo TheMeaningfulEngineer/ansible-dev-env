@@ -1,23 +1,23 @@
 return {
-  setup = function(lspconfig, capabilities)
-    lspconfig.clangd.setup({
+  config = function(capabilities)
+    return {
       capabilities = capabilities,
       filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
       cmd = {
         "clangd",
-        "--background-index",          -- Caches results to speed up subsequent queries
-        "--pch-storage=memory",        -- Store precompiled headers in memory (faster)
-        "--clang-tidy",                -- Enable clang-tidy (remove if not needed)
-        "--completion-style=detailed", -- Better autocompletions
-        "--header-insertion=iwyu",     -- Insert headers intelligently
-        "--limit-results=100",         -- Reduce the number of completion results
-        "--malloc-trim"                -- Free memory more aggressively
+        "--background-index",
+        "--pch-storage=memory",
+        "--clang-tidy",
+        "--completion-style=detailed",
+        "--header-insertion=iwyu",
+        "--limit-results=100",
+        "--malloc-trim",
       },
       settings = {
         clangd = {
           fallbackFlags = { "-std=c++17" },
         },
       },
-    })
-  end
+    }
+  end,
 }

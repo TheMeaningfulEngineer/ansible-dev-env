@@ -19,15 +19,16 @@ vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Show LSP diagnost
 
 -- Load each LSP config and call setup
 for _, file in ipairs(lsp_files) do
-  local server = file:match("([^/]+)%.lua$") -- Extract filename without `.lua`
-    if server and server ~= "init" then
-        local ok, module = pcall(require, "lsp." .. server)
-        if not ok then
-            vim.notify("[ERROR] Failed to load LSP module: " .. server, vim.log.levels.ERROR)
-        elseif type(module.setup) ~= "function" then
-            vim.notify("[ERROR] LSP module " .. server .. " does not have a setup() function!", vim.log.levels.ERROR)
-        else
-            module.setup(lspconfig, capabilities)
-        end
+  local server = file:match("([^/]+)%.lua$")
+  if server and server ~= "init" then
+    local ok, module = pcall(require, "lsp." .. server)
+    if not ok then
+      vim.notify("[ERROR] Failed to load LSP module: " .. server, vim.log.levels.ERROR)
+    elseif type(module.config) ~= "function" then
+      vim.notify("[ERROR] LSP module " .. server .. " does not have a config() function!", vim.log.levels.ERROR)
+    else
+      vim.lsp.config(server, module.config(capabilities))
+      vim.lsp.enable(server)
     end
+  end
 end

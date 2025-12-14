@@ -1,6 +1,6 @@
 return {
-  setup = function(lspconfig, capabilities)
-    lspconfig.basedpyright.setup({
+  config = function(capabilities)
+    return {
       capabilities = capabilities,
       settings = {
         basedpyright = {
@@ -10,12 +10,11 @@ return {
             diagnosticMode = "openFilesOnly",
             useLibraryCodeForTypes = true,
             rules = {
-              reportUnusedCallResult = "none"
-            }
-          }
-        }
-      }
-    })
-  end
+              reportUnusedCallResult = "none",
+            },
+          },
+        },
+      },
+    }
+  end,
 }
-

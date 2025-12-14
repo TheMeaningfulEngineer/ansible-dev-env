@@ -1,6 +1,6 @@
 return {
-  setup = function(lspconfig, capabilities)
-    lspconfig.bashls.setup({
+  config = function(capabilities)
+    return {
       capabilities = capabilities,
       filetypes = { "sh", "zsh", "bash" },
       settings = {
@@ -11,6 +11,6 @@ return {
           enableSourceErrorDiagnostics = true,
         },
       },
-    })
-  end
+    }
+  end,
 }
