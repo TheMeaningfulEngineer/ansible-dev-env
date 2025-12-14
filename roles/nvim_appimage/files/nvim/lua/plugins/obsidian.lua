@@ -18,22 +18,47 @@ return {
       disable_frontmatter = true,
       workspaces = {
         {
-          name = "work",
-          path = "~/vault-experiments/obsidian-aboutness-story-demo-v2",
+          name = "test",
+          path = "~/vault-experiments/obsidian-aboutness-story-demo-3",
+        },
+        {
+          name = "personal",
+          path = "~/vaults/personal",
         },
       },
-      daily_notes = {
-        folder = "dailies",
-      },
+
       ui = {
         enable = false,
       },
-      wiki_link_func = "use_alias_only",
+
+      -- Mirrors Obsidian: newFileFolderPath = "topics"
+      notes_subdir = "topics",
+      new_notes_location = "notes_subdir",
+
+       -- Mirrors Obsidian Daily Notes: folder = "daily", format = YYYY-MM-DD
+      daily_notes = {
+          folder = "daily",
+          date_format = "%Y-%m-%d",
+          template = nil,
+      },
+
+      -- Mirrors Obsidian attachments: attachmentFolderPath = "assets"
+      attachments = {
+        img_folder = "/assets", -- vault-root/assets (per fork docs)
+
+        -- Insert ONLY the filename, not "assets/...".
+        image_text_func = function(path)
+          local name = vim.fs.basename(tostring(path))
+          return string.format("![[%s]]", name)
+        end,
+      },
+
+      -- Safe kebab-case IDs even when title is nil
       note_id_func = function(title)
-      -- Convert the title to a valid file name.
-      -- This removes any special characters and replaces spaces with dashes.
-      local id = title:gsub("%s+", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
-        return id
+        if not title or title == "" then
+          return tostring(os.time())
+        end
+        return title:gsub("%s+", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
       end,
       note_path_func = function(spec)
         local path = spec.dir / spec.id
