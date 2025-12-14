@@ -15,7 +15,7 @@ return {
 
     require("obsidian").setup({
       legacy_commands = false,
-      disable_frontmatter = true,
+      frontmatter = { enabled = false },
       workspaces = {
         {
           name = "work",
