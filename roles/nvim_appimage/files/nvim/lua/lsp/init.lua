@@ -32,3 +32,10 @@ for _, file in ipairs(lsp_files) do
     end
   end
 end
+
+
+vim.opt.autoread = true
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
+  command = "checktime",
+  pattern = "*",
+})
