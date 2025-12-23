@@ -36,6 +36,11 @@ return {
         }
       },
     }
+    vim.api.nvim_create_autocmd("BufWinEnter", {
+      callback = function()
+        vim.cmd("normal! zx")
+      end,
+    })
   end
 }
 
