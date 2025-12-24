@@ -101,23 +101,11 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-vim.opt.foldtext = "getline(v:foldstart)"  -- Just show the first line
-
-vim.opt.foldenable = false  -- Disable automatic folding
-vim.opt.foldlevelstart = 99  -- Set fold level to maximum to unfold everything when toggled
-vim.opt.foldminlines = 1  -- Minimum lines for a fold
-vim.opt.foldnestmax = 10   -- Maximum fold depth (adjust as necessary)
-
 
 -- Highlight active window in a split
 local normal_bg = vim.api.nvim_get_hl(0, { name = "Normal" }).bg
 vim.api.nvim_set_hl(0, "NormalNC", { bg = normal_bg and normal_bg - 0x101010 })
 
-
-
 -- Remove unused mappings so they don't polute my suggestion space
 vim.keymap.del("n", "gx")       -- removes gx after Lazy loads keymaps
 vim.keymap.del("n", "gO")       -- removes gx after Lazy loads keymaps
-

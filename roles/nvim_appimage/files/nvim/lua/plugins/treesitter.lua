@@ -9,6 +9,10 @@ return {
     require("nvim-treesitter.install").update { with_sync = true }
   end,
   config = function()
+    vim.opt.foldmethod = "expr"
+    vim.opt.foldexpr  = "v:lua.vim.treesitter.foldexpr()"
+    vim.opt.foldtext  = "getline(v:foldstart)"
+    vim.opt.foldlevel = 99
     require('nvim-treesitter.configs').setup {
       modules = {}, -- Explicitly defined to satisfy Lua LSP
       ensure_installed = {
