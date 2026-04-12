@@ -1,0 +1,23 @@
+---
+
+# --- Obsidian ---
+
+- name: Download Obsidian .deb
+  get_url:
+    url: "https://github.com/obsidianmd/obsidian-releases/releases/download/v{{ OBSIDIAN_VERSION }}/obsidian_{{ OBSIDIAN_VERSION }}_amd64.deb"
+    dest: "/tmp/obsidian_{{ OBSIDIAN_VERSION }}_amd64.deb"
+    mode: '0644'
+  tags: [obsidian]
+
+- name: Install Obsidian .deb
+  become: true
+  apt:
+    deb: "/tmp/obsidian_{{ OBSIDIAN_VERSION }}_amd64.deb"
+    state: present
+  tags: [obsidian]
+
+- name: Remove Obsidian .deb after install
+  file:
+    path: "/tmp/obsidian_{{ OBSIDIAN_VERSION }}_amd64.deb"
+    state: absent
+  tags: [obsidian]

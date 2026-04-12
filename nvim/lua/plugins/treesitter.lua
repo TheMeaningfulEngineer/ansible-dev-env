@@ -30,8 +30,8 @@ return {
           enable = true,
           lookahead = true, -- Jump to next object
           keymaps = {
-            ["ac"] = "@block.outer", -- Select around block (includes backticks)
-            ["ic"] = "@block.inner", -- Select inside block (excludes backticks)
+            ["ab"] = "@block.outer", -- Select around block (includes backticks)
+            ["ib"] = "@block.inner", -- Select inside block (excludes backticks)
           },
         }
       },

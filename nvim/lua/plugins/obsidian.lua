@@ -1,3 +1,7 @@
+if vim.env.ENABLE_PERSONAL_NVIM ~= "1" then
+  return {}
+end
+
 return {
   "obsidian-nvim/obsidian.nvim",
   version = "*", -- use latest release
@@ -17,10 +21,6 @@ return {
       legacy_commands = false,
       frontmatter = { enabled = false },
       workspaces = {
-        {
-          name = "work",
-          path = "~/vaults/work",
-        },
         {
           name = "personal",
           path = "~/vaults/personal",
