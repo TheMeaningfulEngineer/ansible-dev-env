@@ -44,7 +44,7 @@
 - name: Clone or update nerd-fonts repo (shallow)
   git:
     repo: https://github.com/ryanoasis/nerd-fonts.git
-    dest: "{{ ansible_env.HOME }}/.local/src/nerd-fonts"
+    dest: "{{ HOME_USER_DIR }}/.local/src/nerd-fonts"
     depth: 1
     update: yes
   become: false
@@ -52,7 +52,7 @@
 
 - name: Ensure install.sh is executable
   file:
-    path: "{{ ansible_env.HOME }}/.local/src/nerd-fonts/install.sh"
+    path: "{{ HOME_USER_DIR }}/.local/src/nerd-fonts/install.sh"
     mode: '0755'
   become: false
   tags: [fonts]
@@ -60,15 +60,15 @@
 - name: Install JetBrainsMono Nerd Font
   command: ./install.sh -s JetBrainsMono
   args:
-    chdir: "{{ ansible_env.HOME }}/.local/src/nerd-fonts"
-    creates: "{{ ansible_env.HOME }}/.local/share/fonts/JetBrainsMono\ Nerd\ Font\ Complete.ttf"
+    chdir: "{{ HOME_USER_DIR }}/.local/src/nerd-fonts"
+    creates: "{{ HOME_USER_DIR }}/.local/share/fonts/JetBrainsMono\ Nerd\ Font\ Complete.ttf"
   become: false
   tags: [fonts]
 
 - name: Refresh font cache
   command: fc-cache -f -v
   environment:
-    HOME: "{{ ansible_env.HOME }}"
+    HOME: "{{ HOME_USER_DIR }}"
   become: false
   tags: [fonts]
 

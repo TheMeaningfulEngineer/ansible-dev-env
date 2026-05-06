@@ -1,9 +1,8 @@
 - name: Dev environment setup
   hosts: localhost
   vars:
-    # Use the commented one for debug
-    # HOME_USER_DIR: "{{ playbook_dir }}/fake_home_user"
-    HOME_USER_DIR: "{{ ansible_env.HOME }}"
+    INSTALL_ROOT: "{{ ansible_env.HOME }}"
+    HOME_USER_DIR: "{{ INSTALL_ROOT }}"
     INCLUDE_DESKTOP: false
     INCLUDE_PERSONAL: false
     LOCAL_APPIMAGE_PATH: "{{ HOME_USER_DIR }}/.local/appimages"
@@ -12,6 +11,7 @@
     NVIM_VERSION: "v0.11.5"
     OBSIDIAN_VERSION: "1.8.9"
     FZF_VERSION: "v0.67.0"
+    NODE_VERSION: "v22.15.0"
     LS_LUA_VERSION: "3.13.6"
     SHELLCHECK_VERSION: "0.10.0"
     SHFMT_VERSION: "3.10.0"
