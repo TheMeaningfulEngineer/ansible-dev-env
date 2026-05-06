@@ -1,0 +1,192 @@
+---
+
+# --- Neovim ---
+
+- name: Create appimage directory
+  file:
+    path: "{{ LOCAL_APPIMAGE_PATH }}"
+    state: directory
+    mode: '0755'
+  tags: [nvim]
+
+- name: Create local bin directory
+  file:
+    path: "{{ LOCAL_BIN_PATH }}"
+    state: directory
+    mode: '0755'
+  tags: [nvim]
+
+- name: Install make and build tools for compiling telescope fzf
+  become: true
+  apt:
+    name:
+      - make
+      - build-essential
+    state: present
+    update_cache: true
+  tags: [nvim]
+
+- name: Install wl-clipboard
+  become: true
+  apt:
+    name: wl-clipboard
+    state: present
+    update_cache: true
+  tags: [nvim]
+
+- name: Download Neovim
+  get_url:
+    url: "https://github.com/neovim/neovim/releases/download/{{ NVIM_VERSION }}/nvim-linux-x86_64.appimage"
+    dest: "{{ LOCAL_APPIMAGE_PATH }}/nvim.{{ NVIM_VERSION }}.appimage"
+    mode: '0755'
+  tags: [nvim]
+
+- name: Create a symbolic link for neovim
+  file:
+    src: "{{ LOCAL_APPIMAGE_PATH }}/nvim.{{ NVIM_VERSION }}.appimage"
+    dest: "{{ LOCAL_BIN_PATH }}/nvim"
+    state: link
+  tags: [nvim]
+
+- name: Symlink nvim config to "{{ LOCAL_DOT_CONFIG_PATH }}"
+  file:
+    src: "{{ playbook_dir }}/nvim"
+    dest: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim"
+    state: link
+  tags: [nvim]
+
+- name: Modify bashrc to add aliases for vim and vi
+  blockinfile:
+    path: "{{ HOME_USER_DIR }}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK [nvim]"
+    create: true
+    block: |
+        vim() {
+            if [ -n "$NVIM" ]; then
+                command nvim --server "$NVIM" --remote "$(realpath $@)"
+            else
+                command nvim "$@"
+            fi
+        }
+
+        vi() {
+            if [ -n "$NVIM" ]; then
+                command nvim --server "$NVIM" --remote "$(realpath $@)"
+            else
+                command nvim "$@"
+            fi
+        }
+  tags: [nvim]
+
+# --- Language Server: Bash ---
+
+- name: Download ShellCheck version {{ SHELLCHECK_VERSION }}
+  get_url:
+    url: "https://github.com/koalaman/shellcheck/releases/download/v{{ SHELLCHECK_VERSION }}/shellcheck-v{{ SHELLCHECK_VERSION }}.linux.x86_64.tar.xz"
+    dest: "/tmp/shellcheck.tar.xz"
+  tags: [lsp, lsp-bash]
+
+- name: Extract ShellCheck
+  unarchive:
+    src: "/tmp/shellcheck.tar.xz"
+    dest: "/tmp"
+    remote_src: yes
+  tags: [lsp, lsp-bash]
+
+- name: Move ShellCheck to ~/.local/bin
+  command: mv /tmp/shellcheck-v{{ SHELLCHECK_VERSION }}/shellcheck "{{ ansible_env.HOME }}/.local/bin/shellcheck"
+  args:
+    creates: "{{ ansible_env.HOME }}/.local/bin/shellcheck"
+  tags: [lsp, lsp-bash]
+
+- name: Download shfmt version {{ SHFMT_VERSION }}
+  get_url:
+    url: "https://github.com/mvdan/sh/releases/download/v{{ SHFMT_VERSION }}/shfmt_v{{ SHFMT_VERSION }}_linux_amd64"
+    dest: "/tmp/shfmt"
+  tags: [lsp, lsp-bash]
+
+- name: Move shfmt to ~/.local/bin and make executable
+  command: mv /tmp/shfmt "{{ ansible_env.HOME }}/.local/bin/shfmt"
+  args:
+    creates: "{{ ansible_env.HOME }}/.local/bin/shfmt"
+  tags: [lsp, lsp-bash]
+
+- name: Set executable permissions for shfmt
+  file:
+    path: "{{ ansible_env.HOME }}/.local/bin/shfmt"
+    mode: "0755"
+  tags: [lsp, lsp-bash]
+
+- name: Install bash-language-server in ~/.local
+  npm:
+    name: bash-language-server
+    path: "{{ ansible_env.HOME }}/.local"
+  tags: [lsp, lsp-bash]
+
+- name: Symlink bash-language-server
+  file:
+    src: "{{ ansible_env.HOME }}/.local/node_modules/.bin/bash-language-server"
+    dest: "{{ ansible_env.HOME }}/.local/bin/bash-language-server"
+    state: link
+  tags: [lsp, lsp-bash]
+
+# --- Language Server: Lua ---
+
+- name: Download Lua Language Server
+  get_url:
+    url: "https://github.com/LuaLS/lua-language-server/releases/download/{{ LS_LUA_VERSION }}/lua-language-server-{{ LS_LUA_VERSION }}-linux-x64.tar.gz"
+    dest: "/tmp/lua-language-server-{{ LS_LUA_VERSION }}-linux-x64.tar.gz"
+  tags: [lsp, lsp-lua]
+
+- name: Ensure ~/.local/share/lua-language-server directory exists
+  file:
+    path: "{{ ansible_env.HOME }}/.local/share/lua-language-server"
+    state: directory
+  tags: [lsp, lsp-lua]
+
+- name: Extract Lua Language Server
+  unarchive:
+    src: "/tmp/lua-language-server-{{ LS_LUA_VERSION }}-linux-x64.tar.gz"
+    dest: "{{ ansible_env.HOME }}/.local/share/lua-language-server"
+    remote_src: yes
+    extra_opts:
+      - "--one-top-level"
+    creates: "{{ ansible_env.HOME }}/.local/share/lua-language-server/lua-language-server-{{ LS_LUA_VERSION }}-linux-x64"
+  tags: [lsp, lsp-lua]
+
+- name: Ensure ~/.local/bin exists
+  file:
+    path: "{{ ansible_env.HOME }}/.local/bin"
+    state: directory
+  tags: [lsp, lsp-lua]
+
+- name: Symlink lua-language-server into ~/.local/bin
+  file:
+    src: "{{ ansible_env.HOME }}/.local/share/lua-language-server/lua-language-server-{{ LS_LUA_VERSION }}-linux-x64/bin/lua-language-server"
+    dest: "{{ ansible_env.HOME }}/.local/bin/lua-language-server"
+    state: link
+    force: yes
+    follow: false
+  tags: [lsp, lsp-lua]
+
+# --- Language Server: Python ---
+
+- name: Install Node.js
+  apt:
+    name: nodejs
+    state: present
+  become: true
+  tags: [lsp, lsp-python]
+
+- name: Install npm
+  apt:
+    name: npm
+    state: present
+  become: true
+  tags: [lsp, lsp-python]
+
+- name: Install basedpyright globally
+  npm:
+    name: basedpyright
+    global: true
+  tags: [lsp, lsp-python]

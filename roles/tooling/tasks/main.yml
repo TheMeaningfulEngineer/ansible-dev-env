@@ -1,0 +1,302 @@
+---
+
+# --- Local directories ---
+
+- name: Create the home dir for app images if not there
+  file:
+    path: "{{ LOCAL_APPIMAGE_PATH }}"
+    state: directory
+    mode: '0755'
+  tags: [dirs]
+
+- name: Create "{{ LOCAL_BIN_PATH }}" if not there
+  file:
+    path: "{{ LOCAL_BIN_PATH }}"
+    state: directory
+    mode: '0755'
+  tags: [dirs]
+
+- name: Create "{{ LOCAL_DOT_CONFIG_PATH }}" if not there
+  file:
+    path: "{{ LOCAL_DOT_CONFIG_PATH }}"
+    state: directory
+    mode: '0755'
+  tags: [dirs, nvim]
+
+- name: Export local bin to path
+  blockinfile:
+    path: "{{ HOME_USER_DIR }}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK [local_dirs path]"
+    create: true
+    block: |
+      export PATH=$PATH:{{ LOCAL_BIN_PATH }}
+  tags: [dirs, lsp, lsp-bash, lsp-python]
+
+- name: Set var to trim prompt size
+  blockinfile:
+    path: "{{ HOME_USER_DIR }}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK [local_dirs trim prompt]"
+    create: true
+    block: |
+      PROMPT_DIRTRIM=2
+  tags: [dirs]
+
+# --- Neovim ---
+
+- name: Create appimage directory
+  file:
+    path: "{{ LOCAL_APPIMAGE_PATH }}"
+    state: directory
+    mode: '0755'
+  tags: [nvim]
+
+- name: Create local bin directory
+  file:
+    path: "{{ LOCAL_BIN_PATH }}"
+    state: directory
+    mode: '0755'
+  tags: [nvim]
+
+- name: Install make and build tools for compiling telescope fzf
+  become: true
+  apt:
+    name:
+      - git
+      - make
+      - build-essential
+    state: present
+    update_cache: true
+  tags: [nvim, system]
+
+- name: Download Neovim
+  get_url:
+    url: "https://github.com/neovim/neovim/releases/download/{{ NVIM_VERSION }}/nvim-linux-x86_64.appimage"
+    dest: "{{ LOCAL_APPIMAGE_PATH }}/nvim.{{ NVIM_VERSION }}.appimage"
+    mode: '0755'
+    timeout: 60
+  tags: [nvim, download]
+
+- name: Create a symbolic link for neovim
+  file:
+    src: "{{ LOCAL_APPIMAGE_PATH }}/nvim.{{ NVIM_VERSION }}.appimage"
+    dest: "{{ LOCAL_BIN_PATH }}/nvim"
+    state: link
+  tags: [nvim]
+
+- name: Symlink nvim config to "{{ LOCAL_DOT_CONFIG_PATH }}"
+  file:
+    src: "{{ playbook_dir }}/nvim"
+    dest: "{{ LOCAL_DOT_CONFIG_PATH }}/nvim"
+    state: link
+  tags: [nvim]
+
+- name: Modify bashrc to add aliases for vim and vi
+  blockinfile:
+    path: "{{ HOME_USER_DIR }}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK [nvim]"
+    create: true
+    block: |
+        vim() {
+            if [ -n "$NVIM" ]; then
+                command nvim --server "$NVIM" --remote "$(realpath $@)"
+            else
+                command nvim "$@"
+            fi
+        }
+
+        vi() {
+            if [ -n "$NVIM" ]; then
+                command nvim --server "$NVIM" --remote "$(realpath $@)"
+            else
+                command nvim "$@"
+            fi
+        }
+  tags: [nvim]
+
+# --- Local Node.js runtime for npm-based language servers ---
+
+- name: Ensure local bin directory exists for language servers
+  file:
+    path: "{{ LOCAL_BIN_PATH }}"
+    state: directory
+    mode: '0755'
+  tags: [lsp, lsp-bash, lsp-python]
+
+- name: Ensure local Node.js directory exists
+  file:
+    path: "{{ HOME_USER_DIR }}/.local/share/nodejs"
+    state: directory
+    mode: '0755'
+  tags: [lsp, lsp-bash, lsp-python]
+
+- name: Download Node.js {{ NODE_VERSION }}
+  get_url:
+    url: "https://nodejs.org/dist/{{ NODE_VERSION }}/node-{{ NODE_VERSION }}-linux-x64.tar.xz"
+    dest: "/tmp/node-{{ NODE_VERSION }}-linux-x64.tar.xz"
+    mode: '0644'
+  tags: [lsp, lsp-bash, lsp-python]
+
+- name: Extract Node.js
+  unarchive:
+    src: "/tmp/node-{{ NODE_VERSION }}-linux-x64.tar.xz"
+    dest: "{{ HOME_USER_DIR }}/.local/share/nodejs"
+    remote_src: yes
+    creates: "{{ HOME_USER_DIR }}/.local/share/nodejs/node-{{ NODE_VERSION }}-linux-x64/bin/node"
+  tags: [lsp, lsp-bash, lsp-python]
+
+- name: Symlink Node.js tools
+  file:
+    src: "{{ HOME_USER_DIR }}/.local/share/nodejs/node-{{ NODE_VERSION }}-linux-x64/bin/{{ item }}"
+    dest: "{{ LOCAL_BIN_PATH }}/{{ item }}"
+    state: link
+    force: yes
+  loop:
+    - node
+    - npm
+    - npx
+  tags: [lsp, lsp-bash, lsp-python]
+
+# --- Language Server: Bash ---
+
+- name: Download ShellCheck version {{ SHELLCHECK_VERSION }}
+  get_url:
+    url: "https://github.com/koalaman/shellcheck/releases/download/v{{ SHELLCHECK_VERSION }}/shellcheck-v{{ SHELLCHECK_VERSION }}.linux.x86_64.tar.xz"
+    dest: "/tmp/shellcheck.tar.xz"
+  tags: [lsp, lsp-bash]
+
+- name: Extract ShellCheck
+  unarchive:
+    src: "/tmp/shellcheck.tar.xz"
+    dest: "/tmp"
+    remote_src: yes
+  tags: [lsp, lsp-bash]
+
+- name: Move ShellCheck to ~/.local/bin
+  command: mv /tmp/shellcheck-v{{ SHELLCHECK_VERSION }}/shellcheck "{{ LOCAL_BIN_PATH }}/shellcheck"
+  args:
+    creates: "{{ LOCAL_BIN_PATH }}/shellcheck"
+  tags: [lsp, lsp-bash]
+
+- name: Download shfmt version {{ SHFMT_VERSION }}
+  get_url:
+    url: "https://github.com/mvdan/sh/releases/download/v{{ SHFMT_VERSION }}/shfmt_v{{ SHFMT_VERSION }}_linux_amd64"
+    dest: "/tmp/shfmt"
+  tags: [lsp, lsp-bash]
+
+- name: Move shfmt to ~/.local/bin and make executable
+  command: mv /tmp/shfmt "{{ LOCAL_BIN_PATH }}/shfmt"
+  args:
+    creates: "{{ LOCAL_BIN_PATH }}/shfmt"
+  tags: [lsp, lsp-bash]
+
+- name: Set executable permissions for shfmt
+  file:
+    path: "{{ LOCAL_BIN_PATH }}/shfmt"
+    mode: "0755"
+  tags: [lsp, lsp-bash]
+
+- name: Install bash-language-server in ~/.local
+  npm:
+    name: bash-language-server
+    path: "{{ HOME_USER_DIR }}/.local"
+    executable: "{{ LOCAL_BIN_PATH }}/npm"
+  tags: [lsp, lsp-bash]
+
+- name: Symlink bash-language-server
+  file:
+    src: "{{ HOME_USER_DIR }}/.local/node_modules/.bin/bash-language-server"
+    dest: "{{ LOCAL_BIN_PATH }}/bash-language-server"
+    state: link
+  tags: [lsp, lsp-bash]
+
+# --- Language Server: Lua ---
+
+- name: Download Lua Language Server
+  get_url:
+    url: "https://github.com/LuaLS/lua-language-server/releases/download/{{ LS_LUA_VERSION }}/lua-language-server-{{ LS_LUA_VERSION }}-linux-x64.tar.gz"
+    dest: "/tmp/lua-language-server-{{ LS_LUA_VERSION }}-linux-x64.tar.gz"
+  tags: [lsp, lsp-lua]
+
+- name: Ensure ~/.local/share/lua-language-server directory exists
+  file:
+    path: "{{ HOME_USER_DIR }}/.local/share/lua-language-server"
+    state: directory
+  tags: [lsp, lsp-lua]
+
+- name: Extract Lua Language Server
+  unarchive:
+    src: "/tmp/lua-language-server-{{ LS_LUA_VERSION }}-linux-x64.tar.gz"
+    dest: "{{ HOME_USER_DIR }}/.local/share/lua-language-server"
+    remote_src: yes
+    extra_opts:
+      - "--one-top-level"
+    creates: "{{ HOME_USER_DIR }}/.local/share/lua-language-server/lua-language-server-{{ LS_LUA_VERSION }}-linux-x64"
+  tags: [lsp, lsp-lua]
+
+- name: Ensure ~/.local/bin exists
+  file:
+    path: "{{ LOCAL_BIN_PATH }}"
+    state: directory
+  tags: [lsp, lsp-lua]
+
+- name: Symlink lua-language-server into ~/.local/bin
+  file:
+    src: "{{ HOME_USER_DIR }}/.local/share/lua-language-server/lua-language-server-{{ LS_LUA_VERSION }}-linux-x64/bin/lua-language-server"
+    dest: "{{ LOCAL_BIN_PATH }}/lua-language-server"
+    state: link
+    force: yes
+    follow: false
+  tags: [lsp, lsp-lua]
+
+# --- Language Server: Python ---
+
+- name: Install basedpyright globally
+  npm:
+    name: basedpyright
+    path: "{{ HOME_USER_DIR }}/.local"
+    executable: "{{ LOCAL_BIN_PATH }}/npm"
+  tags: [lsp, lsp-python]
+
+- name: Symlink basedpyright
+  file:
+    src: "{{ HOME_USER_DIR }}/.local/node_modules/.bin/{{ item }}"
+    dest: "{{ LOCAL_BIN_PATH }}/{{ item }}"
+    state: link
+    force: yes
+  loop:
+    - basedpyright
+    - basedpyright-langserver
+  tags: [lsp, lsp-python]
+
+# --- FZF ---
+
+- name: Git checkout fzf
+  git:
+    repo: https://github.com/junegunn/fzf.git
+    dest: "{{ HOME_USER_DIR }}/.fzf"
+    version: "{{ FZF_VERSION }}"
+  tags: [fzf]
+
+- name: Install fzf
+  shell: "yes | {{ HOME_USER_DIR }}/.fzf/install"
+  tags: [fzf]
+
+- name: Install ripgrep
+  become: yes
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    name:
+      - ripgrep
+    state: present
+  tags: [fzf]
+
+- name: Modify bashrc to use fzf rg
+  blockinfile:
+    path: "{{ HOME_USER_DIR }}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK [fzf]"
+    create: true
+    block: |
+      export FZF_DEFAULT_COMMAND='rg --files'
+      [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+  tags: [fzf]
