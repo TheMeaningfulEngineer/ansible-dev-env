@@ -1,14 +1,5 @@
 ---
 
-- name: Enable personal Neovim plugins
-  blockinfile:
-    path: "{{ HOME_USER_DIR }}/.bashrc"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK [personal nvim]"
-    create: true
-    block: |
-      export ENABLE_PERSONAL_NVIM=1
-  tags: [obsidian]
-
 # --- Obsidian ---
 
 - name: Download Obsidian .deb

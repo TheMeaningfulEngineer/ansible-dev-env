@@ -13,7 +13,21 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- The plugins are located in ~/.config/nvim/lua/plugins
-require('lazy').setup('plugins')
+local plugin_specs = require("plugins")
+for _, module in ipairs({
+  "plugins.lspconfig",
+  "plugins.nvim-cmp",
+  "plugins.obsidian",
+  "plugins.telescope",
+  "plugins.which-key",
+}) do
+  local spec = require(module)
+  if type(spec) == "table" and next(spec) ~= nil then
+    table.insert(plugin_specs, spec)
+  end
+end
+require("lazy").setup(plugin_specs)
+require("treesitter")
 
 -- This is an example for a single plugin
 --require("lazy").setup({
@@ -66,18 +80,26 @@ vim.opt.hlsearch = false
 
 -- Default to copying to clipboard
 vim.opt.clipboard = 'unnamedplus'
-vim.g.clipboard = {
-  name = "wl-clipboard",
-  copy = {
-    ["+"] = "wl-copy --foreground --type text/plain",
-    ["*"] = "wl-copy --foreground --type text/plain",
-  },
-  paste = {
-    ["+"] = "wl-paste --no-newline",
-    ["*"] = "wl-paste --no-newline",
-  },
-  cache_enabled = 1,
-}
+if vim.fn.executable("wl-copy") == 1 and vim.fn.executable("wl-paste") == 1 then
+  vim.g.clipboard = {
+    name = "wl-clipboard",
+    copy = {
+      ["+"] = "wl-copy --foreground --type text/plain",
+      ["*"] = "wl-copy --foreground --type text/plain",
+    },
+    paste = {
+      ["+"] = "wl-paste --no-newline",
+      ["*"] = "wl-paste --no-newline",
+    },
+    cache_enabled = 1,
+  }
+elseif vim.fn.executable("xclip") == 0
+    and vim.fn.executable("xsel") == 0
+    and vim.fn.executable("pbcopy") == 0
+    and vim.fn.executable("win32yank.exe") == 0
+    and vim.fn.executable("tmux") == 0 then
+  vim.g.clipboard = "osc52"
+end
 
 -- Show numbers on the side but don't show it for the terminal
 vim.opt.number = true

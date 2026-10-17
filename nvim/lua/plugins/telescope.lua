@@ -1,12 +1,9 @@
 return {
   'nvim-telescope/telescope.nvim',
   dependencies = {
-    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
+    { 'nvim-telescope/telescope-fzy-native.nvim', submodules = true },
   },
   config = function()
-    -- Load the fzf extension
-    require('telescope').load_extension('fzf')
-
     -- Custom grep command
     local custom_grep_command = {"rg", "--color=never", "--no-heading", "--with-filename", "--line-number", "--column", "--smart-case", "--no-ignore-vcs"}
 
@@ -28,6 +25,8 @@ return {
         }
       }
     }
+
+    require('telescope').load_extension('fzy_native')
 
     -- Function to get visual selection
     function vim.getVisualSelection()
@@ -102,5 +101,4 @@ return {
       { desc = "Grep in all-docs" })
   end
 }
-
 

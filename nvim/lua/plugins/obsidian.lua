@@ -1,7 +1,3 @@
-if vim.env.ENABLE_PERSONAL_NVIM ~= "1" then
-  return {}
-end
-
 return {
   "obsidian-nvim/obsidian.nvim",
   version = "*", -- use latest release
@@ -25,6 +21,10 @@ return {
           name = "personal",
           path = "~/vaults/personal",
         },
+        {
+          name = "work",
+          path = "~/vaults/work",
+        },
       },
 
       ui = {
@@ -44,7 +44,7 @@ return {
 
       -- Mirrors Obsidian attachments: attachmentFolderPath = "assets"
       attachments = {
-        img_folder = "/assets", -- vault-root/assets (per fork docs)
+        folder = "/assets",
 
         -- Insert ONLY the filename, not "assets/...".
         image_text_func = function(path)
